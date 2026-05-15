@@ -1,0 +1,44 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import footerBackground from '../assets/images/footer-background.webp'
+---
+
+<footer class='bg-background text-foreground flex h-dvh snap-center flex-col'>
+	<div class='relative size-full p-12'>
+		<div class='relative z-10 flex w-fit flex-col gap-5'>
+			<div class='flex items-center gap-4'>
+				<h1 class='font-vt323 text-5xl'>Make me better with new challenges</h1>
+				<Icon name='heart' class='text-primary size-12' />
+			</div>
+			<button
+				class='border-foreground bg-background text-foreground font-vt323 flex h-16 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-[2rem]'
+			>
+				Contact me
+			</button>
+
+			<h3 class='font-vt323 text-secondary text-[2rem]'>
+				Thank you for watching until the end.
+			</h3>
+		</div>
+
+		<Image
+			src={footerBackground}
+			alt='city pixel art'
+			class='absolute inset-0 size-full object-cover contrast-110 grayscale'
+		/>
+	</div>
+
+	<div class='flex items-center justify-between px-12 py-6'>
+		<span class='font-geist-mono text-secondary text-xl'
+			>© 2026 MARCOAROUND - All rights reserved
+		</span>
+
+		<div class='text-secondary flex gap-4'>
+			<Icon class='size-8' name='github' />
+			<Icon class='size-8' name='linkedin' />
+			<Icon class='size-8' name='email' />
+			<Icon class='size-8' name='instagram' />
+		</div>
+	</div>
+</footer>

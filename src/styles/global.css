@@ -1,1 +1,48 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=VT323&display=swap');
+@import 'tailwindcss';
+
+@theme {
+	--font-vt323: 'VT323', monospace;
+	--font-geist-mono: 'Geist Mono', monospace;
+	--font-jetbrains-mono: 'JetBrains Mono', monospace;
+
+	--color-background: oklch(0.1591 0 0);
+	--color-background-secondary: oklch(0.1344 0 0);
+	--color-foreground: oklch(0.9158 0 0);
+	--color-secondary: oklch(0.7858 0 0);
+	--color-border: oklch(0.5829 0 0);
+	--color-muted: oklch(0.3791 0 0);
+	--color-primary: oklch(0.6609 0.2346 307.24);
+	--color-pattern: oklch(0.2891 0 0);
+}
+
+@utility diagonal-bg {
+	background-image: repeating-linear-gradient(
+		45deg,
+		var(--color-pattern) 0,
+		var(--color-pattern) 1px,
+		transparent 0,
+		transparent 50%
+	);
+	background-size: 12px 12px;
+}
+
+@utility clip-triangle-left {
+	clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+@utility clip-triangle-right {
+	clip-path: polygon(0% 0, 100% 50%, 0% 100%);
+}
+
+@utility clip-triangle-left-up {
+	clip-path: polygon(100% 100%, 0 0, 100% 0%);
+}
+
+@utility clip-triangle-right-up {
+	clip-path: polygon(0% 100%, 100% 0%, 0% 0%);
+}
+
+@utility clip-triangle-x {
+	clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%);
+}

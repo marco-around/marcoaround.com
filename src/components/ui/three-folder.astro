@@ -1,0 +1,89 @@
+---
+import ThreeRow from './three-row.astro'
+
+const folderItems = [
+	{
+		icon: 'typescript',
+		suffix: 'typescript',
+	},
+	{
+		prefix: '├──',
+		icon: 'folder-open',
+		suffix: 'frontend',
+	},
+	{
+		prefix: '│   ├──',
+		icon: 'react',
+		suffix: 'react',
+	},
+	{
+		prefix: '│   ├──',
+		icon: 'vue',
+		suffix: 'vue',
+	},
+	{
+		prefix: '│   ├──',
+		icon: 'tailwind',
+		suffix: 'tailwind',
+	},
+	{
+		prefix: '│   └──',
+		icon: 'astro',
+		suffix: 'astro',
+	},
+	{
+		prefix: '├──',
+		icon: 'folder-open',
+		suffix: 'backend',
+	},
+	{
+		prefix: '│   ├──',
+		icon: 'node',
+		suffix: 'node',
+	},
+	{
+		prefix: '│   ├──',
+		icon: 'fastify',
+		suffix: 'fastify',
+	},
+	{
+		prefix: '│   ├──',
+		icon: 'prisma',
+		suffix: 'prisma',
+	},
+	{
+		prefix: '│   └──',
+		icon: 'postgres',
+		suffix: 'postgres',
+	},
+	{
+		prefix: '├──',
+		icon: 'github',
+		suffix: '.git',
+	},
+	{
+		prefix: '├──',
+		icon: 'docker',
+		suffix: 'docker',
+	},
+	{
+		prefix: '├──',
+		icon: 'figma',
+		suffix: 'figma',
+	},
+	{
+		prefix: '├──',
+		icon: 'markdown',
+		suffix: 'STACKS.md',
+	},
+	{
+		prefix: '└──',
+		icon: 'paper',
+		suffix: 'package.json',
+	},
+]
+---
+
+<div class='-space-y-0.75'>
+	{folderItems.map((item) => <ThreeRow {...item} />)}
+</div>

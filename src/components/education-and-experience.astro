@@ -1,0 +1,51 @@
+---
+import { Icon } from 'astro-icon/components'
+import Timeline from './ui/timeline.astro'
+import TerminalCard from './ui/terminal-card.astro'
+---
+
+<section
+	class='bg-background flex h-dvh snap-center flex-col gap-12 bg-[url("/pattern.svg")] bg-auto bg-repeat p-12'
+>
+	<div class='flex items-center gap-4'>
+		<div class='bg-primary size-3.5 rounded-full'></div>
+		<span class='text-secondary font-geist-mono text-xl'>
+			marco@portfolio:~$ git log -experience -education
+		</span>
+	</div>
+
+	<main class='flex h-full overflow-x-auto overflow-y-hidden py-6'>
+		<Timeline position='top' commitDate='2026-05'>
+			<TerminalCard />
+		</Timeline>
+		<Timeline position='bottom' commitDate='2026-04'>
+			<TerminalCard />
+		</Timeline>
+		<Timeline position='top' commitDate='2026-01'>
+			<TerminalCard />
+		</Timeline>
+		<Timeline position='bottom' commitDate='2025-12'>
+			<TerminalCard />
+		</Timeline>
+	</main>
+
+	<footer
+		class='bg-muted font-geist-mono text-background flex h-8 w-full items-center justify-between'
+	>
+		<div class='flex h-full'>
+			<div class='bg-border flex items-center gap-3 px-3'>
+				[NORMAL]
+				<Icon name='git-branch' />
+				git:main
+			</div>
+			<div class='clip-triangle-right bg-border h-8 w-4'></div>
+		</div>
+
+		<div class='flex h-full'>
+			<div class='clip-triangle-left bg-border h-8 w-4'></div>
+			<div class='bg-border flex items-center gap-3 px-3'>
+				13:30 | 05/01/2026
+			</div>
+		</div>
+	</footer>
+</section>

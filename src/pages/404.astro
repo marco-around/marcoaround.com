@@ -1,0 +1,44 @@
+---
+import { Icon } from 'astro-icon/components'
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title='Not found'>
+	<div class='bg-background h-dvh p-6 md:p-12'>
+		<div class='border-border flex size-full flex-col border'>
+			<header class='bg-border h-12 w-full px-3'>
+				<div class='flex h-full w-[40%] items-end gap-3'>
+					<a
+						class='bg-background text-border border-border flex h-9 w-full items-center justify-between border-b px-3'
+						href='/'
+					>
+						<div class='flex items-center gap-3'>
+							<Icon name='home' class='size-4' />
+							<span class='font-semibold'>Home</span>
+						</div>
+
+						<Icon name='x' class='size-4' />
+					</a>
+
+					<a
+						class='bg-background text-border border-border flex h-9 w-full items-center justify-between border-b px-3'
+						href='/blog'
+					>
+						<div class='flex items-center gap-3'>
+							<Icon name='pencil' class='size-4' />
+							<span class='font-semibold'>Writing</span>
+						</div>
+
+						<Icon name='x' class='size-4' />
+					</a>
+				</div>
+			</header>
+			<main class='flex grow items-center justify-center'>
+				<div class='flex flex-col items-center'>
+					<h1 class='font-vt323 text-foreground text-9xl'>404</h1>
+					<p class='font-vt323 text-secondary text-[2rem]'>Page not found</p>
+				</div>
+			</main>
+		</div>
+	</div>
+</Layout>

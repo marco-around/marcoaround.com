@@ -1,0 +1,71 @@
+---
+import { Icon } from 'astro-icon/components'
+import IdeText from './ui/ide-text.astro'
+import ThreeFolder from './ui/three-folder.astro'
+---
+
+<section class='h-dvh snap-center p-12'>
+	<div class='grid h-full grid-cols-4 overflow-hidden'>
+		<div class='col-span-3 h-full'>
+			<header class='bg-border h-10 w-full px-3'>
+				<div class='flex h-full w-1/5 items-end gap-3'>
+					<div
+						class='bg-background text-border flex h-7 w-full items-center justify-between px-3'
+					>
+						<div class='flex items-center gap-3'>
+							<Icon name='markdown' class='size-4' />
+							<span class='font-semibold'>STACKS.md</span>
+						</div>
+
+						<Icon name='x' class='size-4' />
+					</div>
+				</div>
+			</header>
+
+			<main class='border-border h-full overflow-hidden border-x px-3 pt-3'>
+				<IdeText />
+			</main>
+		</div>
+
+		<aside
+			class='bg-background-secondary border-border flex h-full flex-col border border-l-0'
+		>
+			<header
+				class='border-border flex h-10 items-center justify-between border-b px-3'
+			>
+				<h2 class='font-geist-mono text-secondary text-xl'>Explorer</h2>
+
+				<div class='flex items-center gap-1.5'>
+					<div class='bg-primary size-2 rounded-full'></div>
+					<div class='bg-primary size-2 rounded-full'></div>
+					<div class='bg-primary size-2 rounded-full'></div>
+				</div>
+			</header>
+
+			<main class='p-3'>
+				<ThreeFolder />
+			</main>
+		</aside>
+	</div>
+
+	<footer
+		class='bg-border font-geist-mono text-background flex h-5 w-full items-center justify-between px-3 text-xs'
+	>
+		<div class='flex items-center gap-1'>
+			<Icon name='x-circle' class='size-3.5' />
+			0
+			<Icon name='warning' class='size-3.5' />
+			0
+			<Icon name='warning-circle' class='size-3.5' />
+			0
+		</div>
+
+		<div class='flex items-center gap-4 font-medium'>
+			<span>LF</span>
+			<span>Markdown</span>
+			<span>Ln 12, Col 1</span>
+			<span>UTF-8</span>
+		</div>
+	</footer>
+</section>
+z

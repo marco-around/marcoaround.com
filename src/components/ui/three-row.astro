@@ -1,0 +1,17 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+	prefix?: string
+	icon: string
+	suffix: string
+}
+
+const { prefix, icon, suffix } = Astro.props
+---
+
+<div class='text-secondary flex items-center gap-2'>
+	{prefix && <pre class='font-jetbrains-mono text-2xl'>{prefix}</pre>}
+	<Icon name={icon} class='size-6' />
+	<span class='font-geist-mono text-xl'>{suffix}</span>
+</div>

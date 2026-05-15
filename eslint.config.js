@@ -11,6 +11,16 @@ export default defineConfig([
 	...eslintPluginAstro.configs.recommended,
 
 	{
+		files: ['**/*.astro'],
+		languageOptions: {
+			parserOptions: {
+				parser: typescriptEslint.parser,
+				extraFileExtensions: ['.astro'],
+			},
+		},
+	},
+
+	{
 		files: ['**/*.{js,jsx,ts,tsx}'],
 		plugins: {
 			'react-hooks': eslintPluginReactHooks,

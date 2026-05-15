@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets'
+import aboutMePixelArt from '../assets/images/about-me-pixel-art.webp'
+import { Icon } from 'astro-icon/components'
+---
+
+<section
+	class='bg-background diagonal-bg flex h-dvh snap-center flex-col gap-12 p-12'
+>
+	<div class='flex items-center gap-4'>
+		<div class='bg-primary size-3.5 rounded-full'></div>
+		<span class='text-secondary font-geist-mono text-xl'>
+			marco@portfolio:~$ whoami
+		</span>
+	</div>
+
+	<div class='grid h-full grid-cols-2 gap-28'>
+		<div class='border-border relative size-full border-2 border-dashed'>
+			<div
+				class='absolute top-6 right-6 left-6 flex items-center justify-between gap-4'
+			>
+				<span class='text-secondary font-geist-mono text-xl'> Hello! </span>
+				<div class='bg-primary size-3.5 rounded-full'></div>
+			</div>
+
+			<Image
+				src={aboutMePixelArt}
+				alt='Me in pixel art'
+				class='size-full object-cover'
+			/>
+		</div>
+
+		<div class='flex flex-col'>
+			<h1 class='text-foreground font-geist-mono mb-12 text-[2rem] font-bold'>
+				Hello, I'm Marco!
+			</h1>
+
+			<p
+				class='text-secondary font-geist-mono [&_strong]:text-primary mb-6 text-xl leading-[160%] [&_strong]:font-normal'
+			>
+				A <strong>software developer</strong> deeply focused on the intersection of
+				product and business. My core philosophy is that business-oriented
+				<strong> code quality </strong> is the true catalyst for any company's
+				<strong>growth</strong> and <strong>success</strong>.
+			</p>
+
+			<p
+				class='text-secondary font-geist-mono [&_strong]:text-primary mb-6 text-xl leading-[160%] [&_strong]:font-normal'
+			>
+				I specialize in guiding <strong>team architecture</strong>, scaling
+				systems, and elevating overall project <strong>design</strong>. While I
+				am currently developing a logistics system, I am always open to
+				connecting and discussing innovative solutions that require a
+				<strong>strategic</strong>, product-driven perspective.
+			</p>
+
+			<span class='text-secondary font-jetbrains-mono'>█</span>
+
+			<div
+				class='border-muted text-muted mt-auto flex items-center justify-between border-b-2'
+			>
+				<span class='font-geist-mono text-xl font-medium'>13:30</span>
+
+				<div class='flex items-center'>
+					<Icon name='signal' class='size-12' />
+					<Icon name='battery' class='size-12' />
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

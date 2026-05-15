@@ -1,0 +1,24 @@
+---
+import IdeRow from './ide-row.astro'
+
+const textRows = [
+	'## Oh, you found my <strong>stacks</strong>!',
+	'',
+	'',
+	"Well, I'm a developer with a deep understanding of the <strong>TypeScript</strong> ecosystem. With <strong>3 years of experience</strong>",
+	"using industry-standard tools, I've gained the know-how to build a product from end to end, going from",
+	'designing in <strong>Figma</strong> right through to deploying a container on a <strong>VPS</strong>!',
+	'',
+	"Over this time, I've brought various interfaces to life, turning Figma designs into fully functional apps",
+	"using React and Vue. As for back-end APIs, I've been responsible for making the <strong>technical choices</strong> to",
+	'support high traffic, using Fastify, PostgreSQL, RabbitMQ, and other top-tier tools.',
+	'',
+	'█',
+]
+
+const rows = Array.from({ length: 100 }, (_, i) => textRows[i])
+---
+
+<div class='flex w-full flex-col'>
+	{rows.map((row, i) => <IdeRow number={i + 1} text={row} />)}
+</div>

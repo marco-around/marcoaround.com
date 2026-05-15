@@ -1,0 +1,79 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Model } from './ui/model'
+---
+
+<section class='h-dvh snap-center p-12'>
+	<div class='border-border flex size-full flex-col border'>
+		<header class='bg-border h-12 w-full px-3'>
+			<div class='flex h-full w-[40%] items-end gap-3'>
+				<a
+					class='bg-background text-border flex h-9 w-full items-center justify-between px-3'
+					href='/'
+				>
+					<div class='flex items-center gap-3'>
+						<Icon name='home' class='size-4' />
+						<span class='font-geist-mono font-semibold'>Home</span>
+					</div>
+
+					<Icon name='x' class='size-4' />
+				</a>
+
+				<a
+					class='bg-background text-border border-border flex h-9 w-full items-center justify-between border-b px-3'
+					href='/blog'
+				>
+					<div class='flex items-center gap-3'>
+						<Icon name='pencil' class='size-4' />
+						<span class='font-geist-mono font-semibold'>Writing</span>
+					</div>
+
+					<Icon name='x' class='size-4' />
+				</a>
+			</div>
+		</header>
+		<main class='grid grow grid-cols-2 p-6'>
+			<div class='items-star flex flex-col justify-center gap-12'>
+				<h1 class='font-jetbrains-mono text-primary leading-[1.22]'>
+					<pre>
+███╗   ███╗ █████╗ ██████╗  ██████╗ ██████╗         
+████╗ ████║██╔══██╗██╔══██╗██╔════╝██╔═══██╗        
+██╔████╔██║███████║██████╔╝██║     ██║   ██║        
+██║╚██╔╝██║██╔══██║██╔══██╗██║     ██║   ██║        
+██║ ╚═╝ ██║██║  ██║██║  ██║╚██████╗╚██████╔╝        
+╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝         
+																										
+ █████╗ ██████╗  ██████╗ ██╗   ██╗███╗   ██╗██████╗ 
+██╔══██╗██╔══██╗██╔═══██╗██║   ██║████╗  ██║██╔══██╗
+███████║██████╔╝██║   ██║██║   ██║██╔██╗ ██║██║  ██║
+██╔══██║██╔══██╗██║   ██║██║   ██║██║╚██╗██║██║  ██║
+██║  ██║██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║██████╔╝
+╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═════╝ </pre>
+				</h1>
+
+				<div class='flex flex-col gap-6'>
+					<h2 class='text-secondary font-vt323 text-[2rem] leading-[1.32]'>
+						A traditional developer seeking new challenges<br />around the
+						world...
+					</h2>
+
+					<div class='flex w-[30%] gap-6'>
+						<button
+							class='bg-foreground text-background font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center text-2xl'
+						>
+							Download CV
+						</button>
+
+						<button
+							class='border-foreground text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-2xl'
+						>
+							Contact me
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<Model client:only='react' />
+		</main>
+	</div>
+</section>

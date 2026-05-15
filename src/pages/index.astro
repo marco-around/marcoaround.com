@@ -1,8 +1,20 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { ReactComponent } from "../components/react-component";
+import Layout from '../layouts/Layout.astro'
+import Hero from '../components/hero.astro'
+import AboutMe from '../components/about-me.astro'
+import Stacks from '../components/stacks.astro'
+import EducationAndExperience from '../components/education-and-experience.astro'
+import Projects from '../components/projects.astro'
+import Footer from '../components/footer.astro'
 ---
 
-<Layout>
-  <ReactComponent />
+<Layout title='Home'>
+	<div class='bg-background h-dvh snap-y snap-mandatory overflow-y-auto'>
+		<Hero />
+		<AboutMe />
+		<Stacks />
+		<EducationAndExperience />
+		<Projects />
+		<Footer />
+	</div>
 </Layout>

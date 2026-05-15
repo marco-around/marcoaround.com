@@ -1,0 +1,31 @@
+---
+interface Props {
+	number: number
+	text?: string
+}
+
+const { number, text } = Astro.props
+
+const isTitle =
+	number === 1
+		? 'text-foreground text-[2rem] font-bold'
+		: 'text-secondary text-xl'
+---
+
+<div class='flex items-center gap-3'>
+	<span class='text-muted font-geist-mono w-6 text-right text-xl'>{number}</span
+	>
+	{
+		number === 1 ? (
+			<h1
+				class={`${isTitle} [&>strong]:text-primary font-geist-mono [&>strong]:font-bold`}
+				set:html={text}
+			/>
+		) : (
+			<p
+				class={`${isTitle} [&>strong]:text-primary font-geist-mono [&>strong]:font-normal`}
+				set:html={text}
+			/>
+		)
+	}
+</div>
