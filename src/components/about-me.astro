@@ -1,71 +1,239 @@
 ---
 import { Image } from 'astro:assets'
-import aboutMePixelArt from '../assets/images/about-me-pixel-art.webp'
+import aboutMeSprite1 from '../assets/images/about-me-pixel-art-sprite-1.webp'
+import aboutMeSprite2 from '../assets/images/about-me-pixel-art-sprite-2.webp'
 import { Icon } from 'astro-icon/components'
 ---
 
 <section
-	class='bg-background diagonal-bg flex h-dvh snap-center flex-col gap-12 p-12'
+	id='about-me-section'
+	class='bg-background diagonal-bg flex h-dvh snap-center flex-col gap-6 p-4 md:gap-12 md:p-12'
 >
 	<div class='flex items-center gap-4'>
-		<div class='bg-primary size-3.5 rounded-full'></div>
+		<div
+			class='bg-primary animate-blink size-3 rounded-full duration-75 md:size-3.5'
+		>
+		</div>
 		<span class='text-secondary font-geist-mono text-xl'>
 			marco@portfolio:~$ whoami
 		</span>
 	</div>
 
-	<div class='grid h-full grid-cols-2 gap-28'>
+	<div class='grid h-full grid-cols-1 gap-6 md:grid-cols-2 md:gap-28'>
 		<div class='border-border relative size-full border-2 border-dashed'>
 			<div
-				class='absolute top-6 right-6 left-6 flex items-center justify-between gap-4'
+				class='absolute top-4 right-4 left-4 z-10 flex items-center justify-between gap-4 md:top-6 md:right-6 md:left-6'
 			>
-				<span class='text-secondary font-geist-mono text-xl'> Hello! </span>
-				<div class='bg-primary size-3.5 rounded-full'></div>
+				<span
+					id='typewriter-hello'
+					class='text-secondary font-geist-mono text-base md:text-xl'
+				>
+					Hello!
+				</span>
+				<div
+					class='bg-primary animate-blink size-3 rounded-full duration-75 md:size-3.5'
+				>
+				</div>
 			</div>
 
 			<Image
-				src={aboutMePixelArt}
+				src={aboutMeSprite1}
 				alt='Me in pixel art'
 				class='size-full object-cover'
+			/>
+			<Image
+				src={aboutMeSprite2}
+				alt=''
+				aria-hidden='true'
+				id='sprite-wave-frame'
+				class='absolute inset-0 size-full object-cover'
 			/>
 		</div>
 
 		<div class='flex flex-col'>
-			<h1 class='text-foreground font-geist-mono mb-12 text-[2rem] font-bold'>
-				Hello, I'm Marco!
-			</h1>
+			<h2
+				class='text-foreground font-geist-mono mb-6 text-2xl font-bold md:mb-12 md:text-[2rem]'
+			>
+				<span id='typewriter-tittle'>Hello, I'm Marco!</span>
+			</h2>
 
 			<p
-				class='text-secondary font-geist-mono [&_strong]:text-primary mb-6 text-xl leading-[160%] [&_strong]:font-normal'
+				class='text-secondary font-geist-mono [&_strong]:text-primary mb-4 text-base leading-[160%] md:mb-6 md:text-xl [&_strong]:font-normal'
 			>
-				A <strong>software developer</strong> deeply focused on the intersection of
-				product and business. My core philosophy is that business-oriented
-				<strong> code quality </strong> is the true catalyst for any company's
-				<strong>growth</strong> and <strong>success</strong>.
+				<span id='typewriter-paragraph-1'>
+					A <strong>software developer</strong> deeply focused on the intersection
+					of product and business. My core philosophy is that business-oriented
+					<strong> code quality </strong> is the true catalyst for any company's
+					<strong>growth</strong> and <strong>success</strong>.
+				</span>
 			</p>
 
 			<p
-				class='text-secondary font-geist-mono [&_strong]:text-primary mb-6 text-xl leading-[160%] [&_strong]:font-normal'
+				class='text-secondary font-geist-mono [&_strong]:text-primary mb-4 text-base leading-[160%] md:mb-6 md:text-xl [&_strong]:font-normal'
 			>
-				I specialize in guiding <strong>team architecture</strong>, scaling
-				systems, and elevating overall project <strong>design</strong>. While I
-				am currently developing a logistics system, I am always open to
-				connecting and discussing innovative solutions that require a
-				<strong>strategic</strong>, product-driven perspective.
+				<span id='typewriter-paragraph-2'>
+					I specialize in guiding <strong>team architecture</strong>, scaling
+					systems, and elevating overall project <strong>design</strong>. While
+					I am currently developing a logistics system, I am always open to
+					connecting and discussing innovative solutions that require a
+					<strong>strategic</strong>, product-driven perspective.
+				</span>
 			</p>
 
-			<span class='text-secondary font-jetbrains-mono'>█</span>
-
-			<div
-				class='border-muted text-muted mt-auto flex items-center justify-between border-b-2'
+			<span
+				id='typewriter-cursor-about'
+				class='text-secondary font-jetbrains-mono'>█</span
 			>
-				<span class='font-geist-mono text-xl font-medium'>13:30</span>
+
+			<footer
+				id='footer-control'
+				class='border-muted text-muted mt-auto hidden items-center justify-between border-b-2 md:flex'
+			>
+				<span
+					id='current-time'
+					class='font-geist-mono text-base font-medium md:text-xl'
+				>
+					--:--
+				</span>
 
 				<div class='flex items-center'>
-					<Icon name='signal' class='size-12' />
-					<Icon name='battery' class='size-12' />
+					<Icon name='signal' class='size-9 md:size-12' />
+					<Icon name='battery' class='size-9 md:size-12' />
 				</div>
-			</div>
+			</footer>
 		</div>
 	</div>
 </section>
+
+<script>
+	import gsap from 'gsap'
+	import { ScrollTrigger } from 'gsap/ScrollTrigger'
+	import { TextPlugin } from 'gsap/TextPlugin'
+
+	gsap.registerPlugin(TextPlugin, ScrollTrigger)
+
+	const helloText = document.getElementById('typewriter-hello')
+	const title = document.getElementById('typewriter-tittle')
+	const paragraph1 = document.getElementById('typewriter-paragraph-1')
+	const paragraph2 = document.getElementById('typewriter-paragraph-2')
+	const cursor = document.getElementById('typewriter-cursor-about')
+	const footer = document.getElementById('footer-control')
+
+	if (
+		helloText &&
+		title &&
+		title.parentElement &&
+		paragraph1 &&
+		paragraph1.parentElement &&
+		paragraph2 &&
+		paragraph2.parentElement &&
+		cursor &&
+		footer &&
+		footer.parentElement
+	) {
+		// Armazena o conteúdo HTML original (preservando tags <strong>)
+		const helloString = helloText.innerHTML.trim()
+		const titleText = title.innerHTML.trim()
+		const p1Text = paragraph1.innerHTML.trim()
+		const p2Text = paragraph2.innerHTML.trim()
+
+		// Referências imutáveis para preservar o estreitamento de tipo dentro das closures
+		const titleParent = title.parentElement
+		const p1Parent = paragraph1.parentElement
+		const p2Parent = paragraph2.parentElement
+		const footerParent = footer.parentElement
+
+		// Limpa o conteúdo inicial para a animação começar do zero
+		helloText.innerHTML = ''
+		title.innerHTML = ''
+		paragraph1.innerHTML = ''
+		paragraph2.innerHTML = ''
+
+		// Estado inicial do footer e cursor para evitar FOUC
+		gsap.set(footer, { opacity: 0, y: 40 })
+		gsap.set(cursor, { opacity: 0 })
+
+		// Cria a timeline com gatilho de scroll (ScrollTrigger)
+		const timeline = gsap.timeline({
+			scrollTrigger: {
+				trigger: '#about-me-section',
+				scroller: '.snap-y', // Define o container principal que possui o overflow/scroll
+				start: 'top 70%', // Inicia quando o topo da seção cruza 70% da altura da tela
+				toggleActions: 'play none none none',
+			},
+		})
+
+		// Animação de digitação paralela para o "Hello!" (sem cursor)
+		timeline.to(
+			helloText,
+			{ text: helloString, duration: 0.6, ease: 'none' },
+			0
+		)
+
+		timeline
+			// 1. Torna o cursor sólido e posiciona no final do título
+			.call(() => {
+				gsap.set(cursor, { opacity: 1 })
+				titleParent.appendChild(cursor)
+			})
+			.to(title, { text: titleText, duration: 1, ease: 'none' })
+
+			// 2. Transiciona o cursor para o parágrafo 1 e digita
+			.call(() => {
+				p1Parent.appendChild(cursor)
+			})
+			.to(paragraph1, { text: p1Text, duration: 3, ease: 'none' }, '+=0.1')
+
+			// 3. Transiciona o cursor para o parágrafo 2 e digita
+			.call(() => {
+				p2Parent.appendChild(cursor)
+			})
+			.to(paragraph2, { text: p2Text, duration: 3, ease: 'none' }, '+=0.1')
+
+			// 4. Inicia o piscar contínuo do cursor e retorna-o para a posição original (antes do footer)
+			.call(() => {
+				footerParent.insertBefore(cursor, footer)
+
+				gsap.to(cursor, {
+					opacity: 0,
+					ease: 'steps(1)',
+					repeat: -1,
+					duration: 0.8,
+					yoyo: true,
+				})
+			})
+
+		// Animação paralela do footer iniciando no instante 0
+		timeline.to(
+			footer,
+			{ opacity: 1, y: 0, duration: 2, ease: 'power3.out' },
+			0
+		)
+
+		// Animação do pixel art acenando (3 repetições, sincronizada com scroll)
+		const waveFrame = document.getElementById('sprite-wave-frame')
+		if (waveFrame) {
+			gsap.set(waveFrame, { autoAlpha: 0 })
+
+			const waveTl = gsap.timeline({ repeat: 3 })
+			waveTl
+				.set(waveFrame, { autoAlpha: 1 }, 0.5)
+				.set(waveFrame, { autoAlpha: 0 }, 1.0)
+
+			timeline.add(waveTl, 0)
+		}
+	}
+
+	function updateTime(): void {
+		const timeElement = document.getElementById('current-time')
+		if (timeElement) {
+			const now = new Date()
+			const hours = String(now.getHours()).padStart(2, '0')
+			const minutes = String(now.getMinutes()).padStart(2, '0')
+			timeElement.textContent = `${hours}:${minutes}`
+		}
+	}
+
+	updateTime()
+	setInterval(updateTime, 1000)
+</script>

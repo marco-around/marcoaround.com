@@ -3,17 +3,17 @@ import { Icon } from 'astro-icon/components'
 import { Model } from './ui/model'
 ---
 
-<section class='h-dvh snap-center p-12'>
+<section class='h-dvh snap-center p-4 md:p-12'>
 	<div class='border-border flex size-full flex-col border'>
 		<header class='bg-border h-12 w-full px-3'>
-			<div class='flex h-full w-[40%] items-end gap-3'>
+			<div class='flex h-full w-full items-end gap-3 md:w-[40%]'>
 				<a
-					class='bg-background text-border flex h-9 w-full items-center justify-between px-3'
+					class='bg-background text-border border-border flex h-9 w-full items-center justify-between px-3'
 					href='/'
 				>
 					<div class='flex items-center gap-3'>
 						<Icon name='home' class='size-4' />
-						<span class='font-geist-mono font-semibold'>Home</span>
+						<span class='font-semibold'>Home</span>
 					</div>
 
 					<Icon name='x' class='size-4' />
@@ -25,47 +25,91 @@ import { Model } from './ui/model'
 				>
 					<div class='flex items-center gap-3'>
 						<Icon name='pencil' class='size-4' />
-						<span class='font-geist-mono font-semibold'>Writing</span>
+						<span class='font-semibold'>Writing</span>
 					</div>
 
 					<Icon name='x' class='size-4' />
 				</a>
 			</div>
 		</header>
-		<main class='grid grow grid-cols-2 p-6'>
-			<div class='items-star flex flex-col justify-center gap-12'>
-				<h1 class='font-jetbrains-mono text-primary leading-[1.22]'>
-					<pre>
-███╗   ███╗ █████╗ ██████╗  ██████╗ ██████╗         
-████╗ ████║██╔══██╗██╔══██╗██╔════╝██╔═══██╗        
-██╔████╔██║███████║██████╔╝██║     ██║   ██║        
-██║╚██╔╝██║██╔══██║██╔══██╗██║     ██║   ██║        
-██║ ╚═╝ ██║██║  ██║██║  ██║╚██████╗╚██████╔╝        
-╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝         
-																										
- █████╗ ██████╗  ██████╗ ██╗   ██╗███╗   ██╗██████╗ 
+		<main
+			class='grid min-h-0 grow grid-cols-1 p-4 md:grid-cols-2 md:px-6 md:py-0'
+		>
+			<div class='flex flex-col justify-center gap-6 md:gap-12'>
+				<div
+					aria-hidden='true'
+					class='font-jetbrains-mono text-primary flex flex-col items-center gap-2 text-[0.625rem] leading-[1.22] md:items-start md:text-base'
+				>
+					<div class='relative w-fit overflow-hidden'>
+						<pre
+							class='invisible'
+							id='ascii-marco'>
+███╗   ███╗ █████╗ ██████╗  ██████╗ ██████╗
+████╗ ████║██╔══██╗██╔══██╗██╔════╝██╔═══██╗
+██╔████╔██║███████║██████╔╝██║     ██║   ██║
+██║╚██╔╝██║██╔══██║██╔══██╗██║     ██║   ██║
+██║ ╚═╝ ██║██║  ██║██║  ██║╚██████╗╚██████╔╝
+╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝</pre>
+						<div
+							id='ascii-reveal-1'
+							class='bg-primary absolute inset-y-0 left-0 w-full'
+							style='transform: translateX(-101%)'
+						>
+						</div>
+					</div>
+					<div class='relative w-fit overflow-hidden'>
+						<pre
+							class='invisible'
+							id='ascii-around'>
+ █████╗ ██████╗  ██████╗ ██╗   ██╗███╗   ██╗██████╗
 ██╔══██╗██╔══██╗██╔═══██╗██║   ██║████╗  ██║██╔══██╗
 ███████║██████╔╝██║   ██║██║   ██║██╔██╗ ██║██║  ██║
 ██╔══██║██╔══██╗██║   ██║██║   ██║██║╚██╗██║██║  ██║
 ██║  ██║██║  ██║╚██████╔╝╚██████╔╝██║ ╚████║██████╔╝
-╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═════╝ </pre>
-				</h1>
+╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═════╝</pre>
+						<div
+							id='ascii-reveal-2'
+							class='bg-primary absolute inset-y-0 left-0 w-full'
+							style='transform: translateX(-101%)'
+						>
+						</div>
+					</div>
+				</div>
 
-				<div class='flex flex-col gap-6'>
-					<h2 class='text-secondary font-vt323 text-[2rem] leading-[1.32]'>
-						A traditional developer seeking new challenges<br />around the
-						world...
+				<div class='flex flex-col gap-4 md:gap-6'>
+					<h2
+						class='text-secondary font-vt323 text-center text-lg leading-[1.32] md:text-start md:text-[2rem]'
+					>
+						<span class='sr-only'>
+							A traditional developer seeking new challenges around the world...
+						</span>
+						<span aria-hidden='true'>
+							<span class='block' id='typewriter-row-1'>
+								<span id='typewriter-line-1'></span><span
+									id='typewriter-cursor'
+									class='text-secondary font-jetbrains-mono text-base md:text-2xl'
+								>
+									█
+								</span>
+							</span>
+							<span class='block' id='typewriter-row-2'>
+								<span id='typewriter-line-2'></span>
+							</span>
+						</span>
 					</h2>
 
-					<div class='flex w-[30%] gap-6'>
+					<div
+						class='flex w-full flex-col gap-4 md:w-[30%] md:flex-row md:gap-6'
+						id='hero-buttons'
+					>
 						<button
-							class='bg-foreground text-background font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center text-2xl'
+							class='hero-btn bg-foreground text-background font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center text-xl opacity-0 md:text-2xl'
 						>
 							Download CV
 						</button>
 
 						<button
-							class='border-foreground text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-2xl'
+							class='hero-btn border-foreground text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-xl opacity-0 md:text-2xl'
 						>
 							Contact me
 						</button>
@@ -77,3 +121,135 @@ import { Model } from './ui/model'
 		</main>
 	</div>
 </section>
+
+<script>
+	import gsap from 'gsap'
+	import { TextPlugin } from 'gsap/TextPlugin'
+
+	gsap.registerPlugin(TextPlugin)
+
+	function initHeroAnimation() {
+		const reveal1 = document.getElementById('ascii-reveal-1')
+		const reveal2 = document.getElementById('ascii-reveal-2')
+		const asciiMarco = document.getElementById('ascii-marco')
+		const asciiAround = document.getElementById('ascii-around')
+		const line1 = document.getElementById('typewriter-line-1')
+		const line2 = document.getElementById('typewriter-line-2')
+		const cursor = document.getElementById('typewriter-cursor')
+		const row2 = document.getElementById('typewriter-row-2')
+		const buttons = document.querySelectorAll('.hero-btn')
+
+		if (
+			!reveal1 ||
+			!reveal2 ||
+			!asciiMarco ||
+			!asciiAround ||
+			!line1 ||
+			!line2 ||
+			!cursor ||
+			!row2 ||
+			buttons.length === 0
+		)
+			return
+
+		// Animação infinita do cursor piscando
+		gsap.to(cursor, {
+			opacity: 0,
+			ease: 'steps(1)',
+			repeat: -1,
+			duration: 0.8,
+			yoyo: true,
+		})
+
+		const master = gsap.timeline()
+
+		master.addLabel('ascii-start', 0.2)
+
+		// ASCII 1 Reveal (da esquerda para a direita e saindo para a direita)
+		master.fromTo(
+			reveal1,
+			{ x: '-101%' },
+			{ x: '0%', duration: 0.6, ease: 'power3.inOut' },
+			'ascii-start'
+		)
+		master.set(asciiMarco, { visibility: 'visible' }, 'ascii-start+=0.6')
+		master.to(
+			reveal1,
+			{ x: '130%', duration: 0.6, ease: 'power3.inOut' },
+			'ascii-start+=0.6'
+		)
+
+		// ASCII 2 Reveal
+		master.fromTo(
+			reveal2,
+			{ x: '-101%' },
+			{ x: '0%', duration: 0.6, ease: 'power3.inOut' },
+			'ascii-start+=0.2'
+		)
+		master.set(asciiAround, { visibility: 'visible' }, 'ascii-start+=0.8')
+		master.to(
+			reveal2,
+			{ x: '110%', duration: 0.6, ease: 'power3.inOut' },
+			'ascii-start+=0.8'
+		)
+
+		// Oculta os blocos completamente após saírem
+		master.set(reveal1, { autoAlpha: 0 }, 'ascii-start+=1.2')
+		master.set(reveal2, { autoAlpha: 0 }, 'ascii-start+=1.4')
+
+		master.addLabel('typing', 'ascii-start')
+
+		// Text Typing Row 1
+		master.to(
+			line1,
+			{
+				duration: 1.2,
+				text: 'A traditional developer seeking new challenges',
+				ease: 'none',
+			},
+			'typing'
+		)
+
+		// Move o cursor para a próxima linha
+		master.set(
+			cursor,
+			{
+				onComplete: function () {
+					row2.appendChild(cursor)
+				},
+			},
+			'typing+=1.2'
+		)
+
+		// Text Typing Row 2
+		master.to(
+			line2,
+			{
+				duration: 0.6,
+				text: 'around the world...',
+				ease: 'none',
+			},
+			'typing+=1.2'
+		)
+
+		master.addLabel('buttons', 'ascii-start')
+
+		// Fade In dos botões
+		master.fromTo(
+			buttons,
+			{ y: 20, autoAlpha: 0 },
+			{
+				y: 0,
+				autoAlpha: 1,
+				duration: 0.8,
+				stagger: 0.15,
+				ease: 'power3.out',
+			},
+			'buttons'
+		)
+	}
+
+	document.addEventListener('loading:complete', initHeroAnimation, {
+		once: true,
+	})
+</script>

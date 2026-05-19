@@ -1,3 +1,4 @@
+import { useGSAP } from '@gsap/react'
 import { useFBO } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { gsap } from 'gsap'
@@ -22,10 +23,7 @@ const ASCII_CHARACTERS =
 export function AsciiEffectRenderer() {
 	const { gl, scene, camera, size } = useThree()
 
-	const width = size.width * gl.getPixelRatio()
-	const height = size.height * gl.getPixelRatio()
-
-	const renderTarget = useFBO(width, height)
+	const renderTarget = useFBO()
 
 	const quadScene = useMemo(() => new Scene(), [])
 	const quadCamera = useMemo(
@@ -41,11 +39,11 @@ export function AsciiEffectRenderer() {
 		const material = new ShaderMaterial({
 			transparent: true,
 			uniforms: {
-				tDiffuse: { value: renderTarget.texture },
+				tDiffuse: { value: null },
 				tAsciiAtlas: { value: atlasTexture },
 				charactersCount: { value: ASCII_CHARACTERS.length },
 				resolution: {
-					value: new Vector2(width, height),
+					value: new Vector2(1, 1),
 				},
 				fontSize: { value: 6 },
 				mousePosition: { value: new Vector2(-10, -10) },
@@ -70,37 +68,49 @@ export function AsciiEffectRenderer() {
 		return () => {
 			material.dispose()
 			geometry.dispose()
+			quadScene.remove(quadMesh)
 		}
-	}, [atlasTexture, renderTarget.texture, quadScene, width, height])
+	}, [atlasTexture, quadScene])
 
-	useLayoutEffect(() => {
+	const { contextSafe } = useGSAP((_, ctxSafe) => {
 		if (!shaderMaterial.current) return
 
-		gsap.to(shaderMaterial.current.uniforms.initWave1Radius, {
-			value: 3.0,
-			duration: 2.5,
-			delay: 0.2,
-			ease: 'power1.inOut',
+		const startEntranceAnimation = ctxSafe!(function () {
+			gsap.to(shaderMaterial.current.uniforms.initWave1Radius, {
+				value: 3.0,
+				duration: 2.5,
+				delay: 0.2,
+				ease: 'power1.inOut',
+			})
+
+			gsap.to(shaderMaterial.current.uniforms.initWave2Radius, {
+				value: 3.0,
+				duration: 2.5,
+				delay: 0.3,
+				ease: 'power1.inOut',
+			})
 		})
 
-		gsap.to(shaderMaterial.current.uniforms.initWave2Radius, {
-			value: 3.0,
-			duration: 2.5,
-			delay: 0.3,
-			ease: 'power1.inOut',
+		document.addEventListener('loading:complete', startEntranceAnimation, {
+			once: true,
 		})
+
+		return function () {
+			document.removeEventListener('loading:complete', startEntranceAnimation)
+		}
 	}, [])
 
 	useLayoutEffect(() => {
 		if (shaderMaterial.current) {
-			shaderMaterial.current.uniforms.resolution.value.set(width, height)
+			shaderMaterial.current.uniforms.resolution.value.set(size.width, size.height)
+			shaderMaterial.current.uniforms.tDiffuse.value = renderTarget.texture
 		}
-	}, [width, height])
+	}, [size.width, size.height, renderTarget.texture])
 
 	const isAnimating = useRef(false)
 
 	useLayoutEffect(() => {
-		const handlePointerDown = () => {
+		const handlePointerDown = contextSafe(() => {
 			if (!shaderMaterial.current || isAnimating.current) return
 			isAnimating.current = true
 
@@ -119,25 +129,27 @@ export function AsciiEffectRenderer() {
 					isAnimating.current = false
 				},
 			})
-		}
+		})
 
 		const handlePointerEnter = () => {
-			shaderMaterial.current.uniforms.isHovering.value = 1.0
+			if (shaderMaterial.current) shaderMaterial.current.uniforms.isHovering.value = 1.0
 		}
+		
 		const handlePointerLeave = () => {
-			shaderMaterial.current.uniforms.isHovering.value = 0.0
+			if (shaderMaterial.current) shaderMaterial.current.uniforms.isHovering.value = 0.0
 		}
 
-		gl.domElement.addEventListener('pointerdown', handlePointerDown)
-		gl.domElement.addEventListener('pointerenter', handlePointerEnter)
-		gl.domElement.addEventListener('pointerleave', handlePointerLeave)
+		const canvas = gl.domElement
+		canvas.addEventListener('pointerdown', handlePointerDown)
+		canvas.addEventListener('pointerenter', handlePointerEnter)
+		canvas.addEventListener('pointerleave', handlePointerLeave)
 
 		return () => {
-			gl.domElement.removeEventListener('pointerdown', handlePointerDown)
-			gl.domElement.removeEventListener('pointerenter', handlePointerEnter)
-			gl.domElement.removeEventListener('pointerleave', handlePointerLeave)
+			canvas.removeEventListener('pointerdown', handlePointerDown)
+			canvas.removeEventListener('pointerenter', handlePointerEnter)
+			canvas.removeEventListener('pointerleave', handlePointerLeave)
 		}
-	}, [gl, shaderMaterial])
+	}, [gl, contextSafe])
 
 	useFrame((state) => {
 		if (shaderMaterial.current) {

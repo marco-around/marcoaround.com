@@ -6,10 +6,16 @@ import Stacks from '../components/stacks.astro'
 import EducationAndExperience from '../components/education-and-experience.astro'
 import Projects from '../components/projects.astro'
 import Footer from '../components/footer.astro'
+import { LoadingScreen } from '../components/ui/loading-screen'
 ---
 
-<Layout title='Home'>
+<Layout
+	title='Home'
+	description='Marco - Software Developer Portfolio. Guiding team architecture, scaling systems, and elevating overall project design.'
+>
 	<div class='bg-background h-dvh snap-y snap-mandatory overflow-y-auto'>
+		<h1 class='sr-only'>Marco's Portfolio - Software Developer</h1>
+		<LoadingScreen client:load />
 		<Hero />
 		<AboutMe />
 		<Stacks />

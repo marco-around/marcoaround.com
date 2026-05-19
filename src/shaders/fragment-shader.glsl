@@ -37,30 +37,30 @@ void main() {
 
   vec3 grayBase = originalColor.rgb * 1.8 + 0.2; 
   
-  float aspect = resolution.x / resolution.y;
+  vec2 aspectVec = vec2(resolution.x / resolution.y, 1.0);
   
-  vec2 aspectBlockCenter = vec2(blockCenterUv.x * aspect, blockCenterUv.y);
+  vec2 aspectBlockCenter = blockCenterUv * aspectVec;
+  vec2 aspectWaveCenter = waveCenter * aspectVec;
   
-  vec2 aspectWaveCenter = vec2(waveCenter.x * aspect, waveCenter.y);
   float distToWaveCenter = distance(aspectBlockCenter, aspectWaveCenter);
-  float waveMask = 1.0 - smoothstep(waveRadius - 0.03, waveRadius, distToWaveCenter);
+  float waveMask = smoothstep(waveRadius, waveRadius - 0.03, distToWaveCenter);
   
   float effectiveState = mix(1.0 - colorState, colorState, waveMask);
   
   vec3 activeBaseColor = mix(grayBase, hoverColor, effectiveState);
   vec3 activeHoverColor = mix(hoverColor, grayBase, effectiveState);
 
-  vec2 aspectMouse = vec2(mousePosition.x * aspect, mousePosition.y);
+  vec2 aspectMouse = mousePosition * aspectVec;
   float dist = distance(aspectBlockCenter, aspectMouse);
-  float circleMask = (1.0 - smoothstep(hoverRadius * 0.4, hoverRadius, dist)) * isHovering;
+  float circleMask = smoothstep(hoverRadius, hoverRadius * 0.4, dist) * isHovering;
 
   vec3 finalColor = mix(activeBaseColor, activeHoverColor, circleMask);
   
-  vec2 aspectScreenCenter = vec2(0.5 * aspect, 0.5);
+  vec2 aspectScreenCenter = vec2(0.5) * aspectVec;
   float distToScreenCenter = distance(aspectBlockCenter, aspectScreenCenter);
   
-  float initWave1Mask = 1.0 - smoothstep(initWave1Radius - 0.1, initWave1Radius, distToScreenCenter);
-  float initWave2Mask = 1.0 - smoothstep(initWave2Radius - 0.1, initWave2Radius, distToScreenCenter);
+  float initWave1Mask = smoothstep(initWave1Radius, initWave1Radius - 0.1, distToScreenCenter);
+  float initWave2Mask = smoothstep(initWave2Radius, initWave2Radius - 0.1, distToScreenCenter);
   
   vec3 introColor = mix(hoverColor, finalColor, initWave2Mask);
   

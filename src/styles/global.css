@@ -13,7 +13,33 @@
 	--color-border: oklch(0.5829 0 0);
 	--color-muted: oklch(0.3791 0 0);
 	--color-primary: oklch(0.6609 0.2346 307.24);
-	--color-pattern: oklch(0.2891 0 0);
+	--color-pattern: oklch(0.2264 0 0);
+
+	--animate-blink: blink 6s infinite;
+
+	@keyframes blink {
+		0%,
+		75%,
+		100% {
+			background-color: var(--color-primary);
+		}
+		76%,
+		80%,
+		84%,
+		88%,
+		92%,
+		96% {
+			background-color: var(--color-muted);
+		}
+		78%,
+		82%,
+		86%,
+		90%,
+		94%,
+		98% {
+			background-color: var(--color-primary);
+		}
+	}
 }
 
 @utility diagonal-bg {
