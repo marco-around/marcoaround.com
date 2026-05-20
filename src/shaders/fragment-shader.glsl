@@ -43,7 +43,7 @@ void main() {
   vec2 aspectWaveCenter = waveCenter * aspectVec;
   
   float distToWaveCenter = distance(aspectBlockCenter, aspectWaveCenter);
-  float waveMask = smoothstep(waveRadius, waveRadius - 0.03, distToWaveCenter);
+  float waveMask = smoothstep(waveRadius, waveRadius - 0.15, distToWaveCenter);
   
   float effectiveState = mix(1.0 - colorState, colorState, waveMask);
   
