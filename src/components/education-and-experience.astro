@@ -5,16 +5,26 @@ import TerminalCard from './ui/terminal-card.astro'
 ---
 
 <section
-	class='bg-background flex h-dvh snap-center flex-col gap-12 bg-[url("/pattern.svg")] bg-auto bg-repeat p-6'
+	id='edu-exp-section'
+	class='bg-background flex h-dvh snap-center flex-col gap-6 bg-[url("/pattern.svg")] bg-auto bg-repeat p-4 md:gap-12 md:p-12'
 >
 	<div class='flex items-center gap-4'>
-		<div class='bg-primary size-3.5 rounded-full'></div>
-		<span class='text-secondary font-geist-mono text-xl'>
+		<div
+			id='edu-exp-dot'
+			class='bg-primary size-3 shrink-0 rounded-full md:size-3.5'
+		>
+		</div>
+		<span
+			id='edu-exp-prompt'
+			class='text-secondary font-geist-mono text-base md:text-xl'
+		>
 			marco@portfolio:~$ git log -experience -education
 		</span>
 	</div>
 
-	<main class='flex h-full overflow-x-auto overflow-y-hidden py-6'>
+	<main
+		class='edu-exp-timeline custom-scrollbar flex h-full flex-row overflow-x-auto overflow-y-hidden py-6'
+	>
 		<Timeline position='top' commitDate='2026-05'>
 			<TerminalCard />
 		</Timeline>
@@ -30,10 +40,11 @@ import TerminalCard from './ui/terminal-card.astro'
 	</main>
 
 	<footer
-		class='bg-muted font-geist-mono text-background flex h-8 w-full items-center justify-between'
+		id='edu-exp-footer'
+		class='bg-muted font-geist-mono text-background flex h-8 w-full shrink-0 items-center justify-between'
 	>
 		<div class='flex h-full'>
-			<div class='bg-border flex items-center gap-3 px-3'>
+			<div class='bg-border flex items-center gap-3 px-3 text-sm md:text-base'>
 				[NORMAL]
 				<Icon name='git-branch' />
 				git:main
@@ -43,9 +54,146 @@ import TerminalCard from './ui/terminal-card.astro'
 
 		<div class='flex h-full'>
 			<div class='clip-triangle-left bg-border h-8 w-4'></div>
-			<div class='bg-border flex items-center gap-3 px-3'>
-				13:30 | 05/01/2026
+			<div
+				id='edu-exp-time'
+				class='bg-border flex items-center gap-3 px-3 text-sm md:text-base'
+			>
+				--:-- | --/--/----
 			</div>
 		</div>
 	</footer>
 </section>
+
+<script>
+	import gsap from 'gsap'
+	import { ScrollTrigger } from 'gsap/ScrollTrigger'
+	import { TextPlugin } from 'gsap/TextPlugin'
+
+	gsap.registerPlugin(ScrollTrigger, TextPlugin)
+
+	const section = document.getElementById('edu-exp-section')
+	const prompt = document.getElementById('edu-exp-prompt')
+	const footer = document.getElementById('edu-exp-footer')
+	const timeEl = document.getElementById('edu-exp-time')
+
+	if (section && prompt && footer) {
+		const promptText = prompt.textContent?.trim() ?? ''
+		prompt.textContent = ''
+
+		const cards = section.querySelectorAll<HTMLElement>('.terminal-card')
+		const dates = section.querySelectorAll<HTMLElement>('.timeline-date')
+		const asterisks =
+			section.querySelectorAll<HTMLElement>('.timeline-asterisk')
+		const lines = section.querySelectorAll<HTMLElement>('.timeline-line')
+		const dotGroups = section.querySelectorAll<HTMLElement>('.card-dots')
+
+		gsap.set(cards, { autoAlpha: 0, y: 30 })
+		gsap.set(dates, { autoAlpha: 0, y: 8 })
+		gsap.set(asterisks, { autoAlpha: 0, scale: 0 })
+		gsap.set(lines, { autoAlpha: 0 })
+		gsap.set(footer, { autoAlpha: 0, y: 16 })
+
+		const timeline = gsap.timeline({
+			scrollTrigger: {
+				trigger: '#edu-exp-section',
+				scroller: '.snap-y',
+				start: 'top 70%',
+				toggleActions: 'play none none none',
+			},
+		})
+
+		// Typewriter prompt
+		timeline.to(prompt, {
+			text: promptText,
+			duration: 1.2,
+			ease: 'none',
+		})
+
+		// Timeline lines draw-in
+		timeline.to(
+			lines,
+			{
+				autoAlpha: 1,
+				duration: 0.6,
+				stagger: 0.08,
+				ease: 'power2.out',
+			},
+			'-=0.4'
+		)
+
+		// Asterisks scale-in with bounce
+		timeline.to(
+			asterisks,
+			{
+				autoAlpha: 1,
+				scale: 1,
+				duration: 0.4,
+				stagger: 0.1,
+				ease: 'back.out(2)',
+			},
+			'-=0.3'
+		)
+
+		// Commit dates fade in
+		timeline.to(
+			dates,
+			{
+				autoAlpha: 1,
+				y: 0,
+				duration: 0.4,
+				stagger: 0.1,
+				ease: 'power2.out',
+			},
+			'-=0.2'
+		)
+
+		// Cards staggered entrance
+		timeline.to(
+			cards,
+			{
+				autoAlpha: 1,
+				y: 0,
+				duration: 0.6,
+				stagger: 0.15,
+				ease: 'power3.out',
+			},
+			'-=0.2'
+		)
+
+		// Footer slide up
+		timeline.to(
+			footer,
+			{ autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+			'-=0.3'
+		)
+
+		// Card dots pulse animation (matches explorer-dots pattern from stacks section)
+		for (const dotGroup of dotGroups) {
+			const dots = Array.from(dotGroup.querySelectorAll<HTMLElement>('div'))
+			if (dots.length === 0) continue
+
+			const dotTl = gsap.timeline({ repeat: -1, delay: 1 })
+			for (const dot of dots) {
+				dotTl
+					.to(dot, { opacity: 0.3, duration: 0.3, ease: 'power1.inOut' })
+					.to(dot, { opacity: 1, duration: 0.3, ease: 'power1.inOut' })
+			}
+			dotTl.to({}, { duration: 0.8 })
+		}
+	}
+
+	// Live clock in footer
+	function updateEduExpTime(): void {
+		if (!timeEl) return
+		const now = new Date()
+		const hours = String(now.getHours()).padStart(2, '0')
+		const minutes = String(now.getMinutes()).padStart(2, '0')
+		const day = String(now.getDate()).padStart(2, '0')
+		const month = String(now.getMonth() + 1).padStart(2, '0')
+		const year = now.getFullYear()
+		timeEl.textContent = `${hours}:${minutes} | ${month}/${day}/${year}`
+	}
+
+	updateEduExpTime()
+	setInterval(updateEduExpTime, 1000)
+</script>

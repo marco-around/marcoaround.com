@@ -9,8 +9,12 @@ const MOBILE_BREAKPOINT = 768
 export function Model() {
 	const isMobile = useMemo(() => window.innerWidth < MOBILE_BREAKPOINT, [])
 
+	const canvasWrapperClass = isMobile
+		? 'relative size-full pointer-events-none overflow-hidden'
+		: 'relative size-full touch-none overflow-hidden'
+
 	return (
-		<div className='relative size-full touch-none overflow-hidden'>
+		<div className={canvasWrapperClass}>
 			<Canvas camera={{ fov: 45, position: [0, 0, 1.5] }} dpr={[1, 2]}>
 				<ambientLight intensity={1.5} />
 				<AsciiEffectRenderer isMobile={isMobile} />

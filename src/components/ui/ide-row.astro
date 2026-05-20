@@ -2,30 +2,44 @@
 interface Props {
 	number: number
 	text?: string
+	textId?: string
 }
 
-const { number, text } = Astro.props
+const { number, text, textId } = Astro.props
 
-const isTitle =
+const titleClasses =
 	number === 1
-		? 'text-foreground text-[2rem] font-bold'
-		: 'text-secondary text-xl'
+		? 'text-foreground text-2xl md:text-[2rem] font-bold'
+		: 'text-secondary text-base md:text-xl'
 ---
 
-<div class='flex items-center gap-3'>
-	<span class='text-muted font-geist-mono w-6 text-right text-xl'>{number}</span
+<div class='flex items-baseline gap-2 md:gap-3'>
+	<span
+		class='text-muted font-geist-mono w-4 text-right text-base md:w-6 md:text-xl'
 	>
+		{number}
+	</span>
 	{
 		number === 1 ? (
 			<h1
-				class={`${isTitle} [&>strong]:text-primary font-geist-mono [&>strong]:font-bold`}
-				set:html={text}
-			/>
+				class={`${titleClasses} [&_strong]:text-primary font-geist-mono flex-1 break-normal [&_strong]:font-bold`}
+			>
+				{textId ? (
+					<span id={textId} set:html={text} />
+				) : (
+					<Fragment set:html={text} />
+				)}
+			</h1>
 		) : (
 			<p
-				class={`${isTitle} [&>strong]:text-primary font-geist-mono [&>strong]:font-normal`}
-				set:html={text}
-			/>
+				class={`${titleClasses} [&_strong]:text-primary font-geist-mono flex-1 break-normal [&_strong]:font-normal`}
+			>
+				{textId ? (
+					<span id={textId} set:html={text} />
+				) : (
+					<Fragment set:html={text} />
+				)}
+			</p>
 		)
 	}
 </div>

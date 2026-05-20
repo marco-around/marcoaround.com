@@ -129,6 +129,8 @@ export function AsciiEffectRenderer({ isMobile }: AsciiEffectRendererProps) {
 	const hasPointerMoved = useRef(false)
 
 	useLayoutEffect(() => {
+		if (isMobile) return
+
 		const handlePointerDown = contextSafe(function onPointerDown() {
 			if (!shaderMaterial.current || isAnimating.current) return
 			isAnimating.current = true
@@ -193,7 +195,7 @@ export function AsciiEffectRenderer({ isMobile }: AsciiEffectRendererProps) {
 			canvas.removeEventListener('pointerup', handlePointerUp)
 			if (touchTimeout.current) clearTimeout(touchTimeout.current)
 		}
-	}, [gl, contextSafe])
+	}, [gl, contextSafe, isMobile])
 
 	useFrame(function renderAsciiPass(state) {
 		if (shaderMaterial.current && hasPointerMoved.current) {

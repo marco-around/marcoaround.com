@@ -1,24 +1,155 @@
 ---
 import IdeRow from './ide-row.astro'
 
-const textRows = [
-	'## Oh, you found my <strong>stacks</strong>!',
-	'',
-	'',
-	"Well, I'm a developer with a deep understanding of the <strong>TypeScript</strong> ecosystem. With <strong>3 years of experience</strong>",
-	"using industry-standard tools, I've gained the know-how to build a product from end to end, going from",
-	'designing in <strong>Figma</strong> right through to deploying a container on a <strong>VPS</strong>!',
-	'',
-	"Over this time, I've brought various interfaces to life, turning Figma designs into fully functional apps",
-	"using React and Vue. As for back-end APIs, I've been responsible for making the <strong>technical choices</strong> to",
-	'support high traffic, using Fastify, PostgreSQL, RabbitMQ, and other top-tier tools.',
-	'',
-	'█',
+interface TextRow {
+	text: string
+	id: string
+}
+
+const textRows: TextRow[] = [
+	{ text: '## Oh, you found my <strong>stacks</strong>!', id: 'ide-row-1' },
+	{ text: '', id: '' },
+	{ text: '', id: '' },
+	{
+		text: "Well, I'm a developer with a deep understanding of the <strong>TypeScript</strong> ecosystem. With <strong>3 years of experience</strong>",
+		id: 'ide-row-4',
+	},
+	{
+		text: "using industry-standard tools, I've gained the know-how to build a product from end to end, going from",
+		id: 'ide-row-5',
+	},
+	{
+		text: 'designing in <strong>Figma</strong> right through to deploying a container on a <strong>VPS</strong>!',
+		id: 'ide-row-6',
+	},
+	{ text: '', id: '' },
+	{
+		text: "Over this time, I've brought various interfaces to life, turning Figma designs into fully functional apps",
+		id: 'ide-row-8',
+	},
+	{
+		text: "using React and Vue. As for back-end APIs, I've been responsible for making the <strong>technical choices</strong> to",
+		id: 'ide-row-9',
+	},
+	{
+		text: 'support high traffic, using Fastify, PostgreSQL, RabbitMQ, and other top-tier tools.',
+		id: 'ide-row-10',
+	},
+	{ text: '', id: '' },
 ]
+
+const CURSOR_ID = 'ide-typewriter-cursor'
 
 const rows = Array.from({ length: 100 }, (_, i) => textRows[i])
 ---
 
-<div class='flex w-full flex-col'>
-	{rows.map((row, i) => <IdeRow number={i + 1} text={row} />)}
+<div id='ide-text-container' class='flex w-full flex-col'>
+	{
+		rows.map((row, i) => {
+			const isCursorRow = i === textRows.length
+
+			if (isCursorRow) {
+				return (
+					<IdeRow
+						number={i + 1}
+						text={`<span id="${CURSOR_ID}" class="text-secondary font-jetbrains-mono">█</span>`}
+					/>
+				)
+			}
+
+			return (
+				<IdeRow
+					number={i + 1}
+					text={row?.text}
+					textId={row?.id || undefined}
+				/>
+			)
+		})
+	}
 </div>
+
+<script>
+	import gsap from 'gsap'
+	import { ScrollTrigger } from 'gsap/ScrollTrigger'
+	import { TextPlugin } from 'gsap/TextPlugin'
+
+	gsap.registerPlugin(TextPlugin, ScrollTrigger)
+
+	const ROW_IDS = [
+		'ide-row-1',
+		'ide-row-4',
+		'ide-row-5',
+		'ide-row-6',
+		'ide-row-8',
+		'ide-row-9',
+		'ide-row-10',
+	] as const
+
+	const cursor = document.getElementById('ide-typewriter-cursor')
+	const container = document.getElementById('ide-text-container')
+
+	if (cursor && container) {
+		const rows: Array<{ element: HTMLElement; originalHTML: string }> = []
+
+		for (const id of ROW_IDS) {
+			const el = document.getElementById(id)
+			if (!el) continue
+			rows.push({ element: el, originalHTML: el.innerHTML.trim() })
+			el.innerHTML = ''
+		}
+
+		gsap.set(cursor, { opacity: 0 })
+
+		// Velocidade baseada em caracteres por segundo (~60 chars/s)
+		const CHARS_PER_SECOND = 60
+
+		function computeDuration(html: string): number {
+			const plainText = html.replace(/<[^>]*>/g, '')
+			return Math.max(plainText.length / CHARS_PER_SECOND, 0.3)
+		}
+
+		const timeline = gsap.timeline({
+			scrollTrigger: {
+				trigger: container,
+				scroller: '.snap-y',
+				start: 'top 80%',
+				toggleActions: 'play none none none',
+			},
+		})
+
+		for (let i = 0; i < rows.length; i++) {
+			const { element, originalHTML } = rows[i]
+			const duration = computeDuration(originalHTML)
+			const parent = element.parentElement
+
+			timeline.call(() => {
+				gsap.set(cursor, { opacity: 1 })
+				if (parent) {
+					parent.appendChild(cursor)
+				}
+			})
+
+			timeline.to(element, {
+				text: originalHTML,
+				duration,
+				ease: 'none',
+			})
+		}
+
+		// Retorna o cursor à posição original e inicia piscar contínuo
+		const cursorOriginalParent = cursor.parentElement
+		if (cursorOriginalParent) {
+			timeline.call(() => {
+				cursorOriginalParent.appendChild(cursor)
+
+				gsap.to(cursor, {
+					opacity: 0,
+					ease: 'steps(1)',
+					repeat: -1,
+					duration: 0.8,
+					yoyo: true,
+				})
+			})
+		}
+	}
+</script>

@@ -84,6 +84,35 @@ const folderItems = [
 ]
 ---
 
-<div class='-space-y-0.75'>
+<div id='three-folder-container' class='-space-y-0.75 overflow-hidden'>
 	{folderItems.map((item) => <ThreeRow {...item} />)}
 </div>
+
+<script>
+	import gsap from 'gsap'
+	import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+	gsap.registerPlugin(ScrollTrigger)
+
+	const container = document.getElementById('three-folder-container')
+
+	if (container) {
+		const rows = Array.from(container.children) as HTMLElement[]
+
+		gsap.set(rows, { opacity: 0, x: 60 })
+
+		gsap.to(rows, {
+			opacity: 1,
+			x: 0,
+			duration: 0.5,
+			ease: 'power2.out',
+			stagger: 0.3,
+			scrollTrigger: {
+				trigger: container,
+				scroller: '.snap-y',
+				start: 'top 85%',
+				toggleActions: 'play none none none',
+			},
+		})
+	}
+</script>

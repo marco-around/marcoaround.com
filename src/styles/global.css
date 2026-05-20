@@ -72,3 +72,24 @@
 @utility clip-triangle-x {
 	clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%);
 }
+
+@utility custom-scrollbar {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-muted) transparent;
+
+	&::-webkit-scrollbar {
+		height: 16px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--color-muted);
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background-color: var(--color-border);
+	}
+}

@@ -9,31 +9,31 @@ interface Props {
 const { position, commitDate } = Astro.props
 ---
 
-<div class='flex h-full w-fit flex-col gap-12'>
+<div class='timeline-segment flex h-full w-fit flex-col gap-12' data-position={position}>
 	<div class='flex-1 px-12 text-center'>
 		{position === 'top' && <slot />}
 	</div>
 
 	<div class='text-border relative flex items-center gap-6'>
-		<div class='border-border w-full border-t-4 border-dashed'></div>
+		<div class='timeline-line border-border w-full border-t-4 border-dashed'></div>
 
-		<Icon name='asterisk' class='text-border min-h-4 min-w-4' />
+		<Icon name='asterisk' class='timeline-asterisk text-border min-h-4 min-w-4 shrink-0' />
 
 		{
 			position === 'top' && (
-				<span class='font-geist-mono text-border absolute top-6 left-52 text-sm'>
+				<span class='timeline-date font-geist-mono text-border absolute top-6 left-52 text-sm'>
 					[commit {commitDate}]
 				</span>
 			)
 		}
 		{
 			position === 'bottom' && (
-				<span class='font-geist-mono text-border absolute bottom-6 left-52 text-sm'>
+				<span class='timeline-date font-geist-mono text-border absolute bottom-6 left-52 text-sm'>
 					[commit {commitDate}]
 				</span>
 			)
 		}
-		<div class='border-border w-full border-t-4 border-dashed'></div>
+		<div class='timeline-line border-border w-full border-t-4 border-dashed'></div>
 	</div>
 
 	<div class='flex-1 px-12'>
