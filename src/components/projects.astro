@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import backgroundPixelArt from '../assets/images/projects-background.webp'
+import backgroundPixelArtMobile from '../assets/images/projects-background-mobile.webp'
 import vhs from '../assets/images/vhs.webp'
 import moDisc from '../assets/images/mo-disc.webp'
 import diskette from '../assets/images/diskette.webp'
@@ -8,40 +9,123 @@ import cartridge from '../assets/images/cartridge.webp'
 ---
 
 <section
-	class='bg-background text-foreground flex h-dvh snap-center flex-col gap-12 p-12'
+	class='bg-background text-foreground flex h-dvh snap-center flex-col justify-between gap-6 p-4 md:gap-12 md:p-12'
 >
 	<div class='flex items-center gap-4'>
-		<div class='bg-primary size-3.5 rounded-full'></div>
-		<span class='text-secondary font-geist-mono text-xl'>
+		<div class='bg-primary size-3 shrink-0 rounded-full md:size-3.5'></div>
+		<span class='text-secondary font-geist-mono text-base md:text-xl'>
 			marco@portfolio:~$ render -projects
 		</span>
 	</div>
 
 	<div
-		class='border-border relative flex size-full flex-col items-center border-2'
+		class='border-border relative mx-auto hidden aspect-video max-w-7xl border-2 md:block'
 	>
-		<div class='bg-border clip-triangle-x z-10 h-20 w-1/3 p-0.5 px-1 pt-0'>
+		<div
+			class='bg-border clip-triangle-x absolute left-1/2 z-10 h-14 w-full -translate-x-1/2 p-0.5 px-1 pt-0 md:w-1/3'
+		>
 			<div
 				class='clip-triangle-x bg-background flex size-full items-center justify-center'
 			>
-				<h2 class='font-vt323 text-primary text-5xl'>Projects</h2>
+				<h2 class='font-vt323 text-primary text-3xl md:text-5xl'>Projects</h2>
 			</div>
 		</div>
 
 		<Image
 			src={backgroundPixelArt}
 			alt='Pixel art background'
-			class='absolute inset-0 size-full object-cover contrast-110 grayscale'
+			class='size-full contrast-110 grayscale'
 		/>
 
 		<div class='absolute inset-0 z-10'>
 			<a
 				href='#'
-				class='group absolute top-[20%] left-[30%] flex flex-col items-center transition-transform duration-200 hover:-translate-y-2'
+				class='group absolute top-[21%] left-[40%] flex flex-col items-center'
 			>
-				<Image src={vhs} alt='vhs pixel art' class='h-[10%]' />
+				<Image
+					src={vhs}
+					alt='vhs pixel art'
+					class='w-[55%] transition-transform duration-200 hover:-translate-y-2'
+				/>
+			</a>
+
+			<a
+				href='#'
+				class='group absolute top-[58%] left-[30%] flex flex-col items-center'
+			>
+				<Image
+					src={diskette}
+					alt='diskette pixel art'
+					class='w-[55%] transition-transform duration-200 hover:-translate-y-2'
+				/>
+			</a>
+
+			<a
+				href='#'
+				class='group absolute top-[35%] left-[59%] flex flex-col items-center'
+			>
+				<Image
+					src={cartridge}
+					alt='cartridge pixel art'
+					class='w-[55%] transition-transform duration-200 hover:-translate-y-2'
+				/>
+			</a>
+
+			<a
+				href='#'
+				class='group absolute top-[65%] left-[50%] flex flex-col items-center'
+			>
+				<Image
+					src={moDisc}
+					alt='mo disc pixel art'
+					class='w-[55%] transition-transform duration-200 hover:-translate-y-2'
+				/>
+			</a>
+		</div>
+	</div>
+
+	<div
+		class='border-border relative block aspect-9/16 h-full max-h-160 border-2 md:hidden'
+	>
+		<div
+			class='bg-border clip-triangle-x absolute z-10 h-14 w-full p-0.5 px-1 pt-0'
+		>
+			<div
+				class='clip-triangle-x bg-background flex size-full items-center justify-center'
+			>
+				<h2 class='font-vt323 text-primary text-3xl md:text-5xl'>Projects</h2>
+			</div>
+		</div>
+
+		<Image
+			src={backgroundPixelArtMobile}
+			alt='Pixel art background'
+			class='size-full contrast-110 grayscale'
+		/>
+
+		<div class='absolute inset-0 z-10'>
+			<a
+				href='#'
+				class='group absolute top-[20%] left-[20%] flex flex-col items-center'
+			>
+				<Image
+					src={vhs}
+					alt='vhs pixel art'
+					class='w-[50%] transition-transform duration-200 hover:-translate-y-2'
+				/>
+			</a>
+
+			<a
+				href='#'
+				class='group absolute top-[51%] left-[5%] flex flex-col items-center'
+			>
+				<Image
+					src={diskette}
+					alt='diskette pixel art'
+					class='w-[50%] transition-transform duration-200 hover:-translate-y-2'
+				/>
 				<span
-					class='font-vt323 -mt-5 ml-10 -rotate-27 transform text-2xl text-white/80 group-hover:text-white'
+					class='font-vt323 text-secondary -mt-2.5 ml-13 -rotate-24 transform text-2xl'
 				>
 					[Short Link]
 				</span>
@@ -49,11 +133,15 @@ import cartridge from '../assets/images/cartridge.webp'
 
 			<a
 				href='#'
-				class='group absolute top-[55%] left-[30%] flex flex-col items-center transition-transform duration-200 hover:-translate-y-2'
+				class='group absolute top-[44%] left-[45%] flex flex-col items-center'
 			>
-				<Image src={diskette} alt='diskette pixel art' class='h-[10%]' />
+				<Image
+					src={cartridge}
+					alt='cartridge pixel art'
+					class='w-[50%] transition-transform duration-200 hover:-translate-y-2'
+				/>
 				<span
-					class='font-vt323 -mt-2.5 ml-13 -rotate-24 transform text-2xl text-white/80 group-hover:text-white'
+					class='font-vt323 text-secondary -mt-6.5 ml-14 -rotate-25 transform text-2xl'
 				>
 					[Short Link]
 				</span>
@@ -61,23 +149,15 @@ import cartridge from '../assets/images/cartridge.webp'
 
 			<a
 				href='#'
-				class='group absolute top-[25%] left-[59%] flex flex-col items-center transition-transform duration-200 hover:-translate-y-2'
+				class='group absolute top-[70%] left-[30%] flex flex-col items-center'
 			>
-				<Image src={cartridge} alt='cartridge pixel art' class='h-[10%]' />
+				<Image
+					src={moDisc}
+					alt='mo disc pixel art'
+					class='w-[50%] transition-transform duration-200 hover:-translate-y-2'
+				/>
 				<span
-					class='font-vt323 -mt-6.5 ml-14 -rotate-25 transform text-2xl text-white/80 group-hover:text-white'
-				>
-					[Short Link]
-				</span>
-			</a>
-
-			<a
-				href='#'
-				class='group absolute top-[62%] left-[54%] flex flex-col items-center transition-transform duration-200 hover:-translate-y-2'
-			>
-				<Image src={moDisc} alt='mo disc pixel art' class='h-[10%]' />
-				<span
-					class='font-vt323 -mt-5 ml-15 -rotate-25 transform text-2xl text-white/80 group-hover:text-white'
+					class='font-vt323 text-secondary -mt-5 ml-15 -rotate-25 transform text-2xl'
 				>
 					[Short Link]
 				</span>
@@ -85,7 +165,7 @@ import cartridge from '../assets/images/cartridge.webp'
 		</div>
 	</div>
 
-	<span class='font-geist-mono text-center text-2xl'>
+	<span class='font-geist-mono text-center text-xl md:text-2xl'>
 		Render successful | Files: 4 | Available space: 2
 	</span>
 </section>

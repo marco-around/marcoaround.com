@@ -4,20 +4,53 @@ import { Icon } from 'astro-icon/components'
 interface Props {
 	position: 'top' | 'bottom'
 	commitDate: string
+	isFirst?: boolean
 }
 
-const { position, commitDate } = Astro.props
+const { position, commitDate, isFirst } = Astro.props
 ---
 
-<div class='timeline-segment flex h-full w-fit flex-col gap-12' data-position={position}>
+<!-- Mobile: vertical timeline layout -->
+<div class='timeline-segment flex gap-4 md:hidden' data-position={position}>
+	<div class='flex flex-col items-center gap-2 pr-6'>
+		<div
+			class=`${isFirst ? 'hidden': ''} timeline-line border-border h-6 border-l-4 border-dashed`
+		>
+		</div>
+		<Icon
+			name='asterisk'
+			class='timeline-asterisk text-border my-1 min-h-4 min-w-4 shrink-0'
+		/>
+		<div class='timeline-line border-border flex-1 border-l-4 border-dashed'>
+		</div>
+	</div>
+
+	<div class=`flex flex-1 flex-col gap-2 ${isFirst ? '' : 'pt-8'}`>
+		<span class='timeline-date font-geist-mono text-border text-sm'>
+			[commit {commitDate}]
+		</span>
+
+		<slot />
+	</div>
+</div>
+
+<!-- Desktop: horizontal timeline layout (original) -->
+<div
+	class='timeline-segment hidden h-full w-fit flex-col gap-12 md:flex'
+	data-position={position}
+>
 	<div class='flex-1 px-12 text-center'>
 		{position === 'top' && <slot />}
 	</div>
 
 	<div class='text-border relative flex items-center gap-6'>
-		<div class='timeline-line border-border w-full border-t-4 border-dashed'></div>
+		<div class='timeline-line border-border w-full border-t-4 border-dashed'>
+		</div>
 
-		<Icon name='asterisk' class='timeline-asterisk text-border min-h-4 min-w-4 shrink-0' />
+		<Icon
+			name='asterisk'
+			class='timeline-asterisk text-border min-h-4 min-w-4 shrink-0'
+		/>
 
 		{
 			position === 'top' && (
@@ -33,7 +66,8 @@ const { position, commitDate } = Astro.props
 				</span>
 			)
 		}
-		<div class='timeline-line border-border w-full border-t-4 border-dashed'></div>
+		<div class='timeline-line border-border w-full border-t-4 border-dashed'>
+		</div>
 	</div>
 
 	<div class='flex-1 px-12'>

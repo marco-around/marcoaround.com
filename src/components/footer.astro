@@ -5,19 +5,23 @@ import footerBackground from '../assets/images/footer-background.webp'
 ---
 
 <footer class='bg-background text-foreground flex h-dvh snap-center flex-col'>
-	<div class='relative size-full p-12'>
-		<div class='relative z-10 flex w-fit flex-col gap-5'>
+	<div class='relative size-full p-4 md:p-12'>
+		<div class='relative z-10 flex w-fit flex-col gap-3 md:gap-5'>
 			<div class='flex items-center gap-4'>
-				<h1 class='font-vt323 text-5xl'>Make me better with new challenges</h1>
+				<h1 class='font-vt323 text-center text-3xl md:text-start md:text-5xl'>
+					Make me better with new challenges
+				</h1>
 				<Icon name='heart' class='text-primary size-12' />
 			</div>
 			<button
-				class='border-foreground bg-background text-foreground font-vt323 flex h-16 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-[2rem]'
+				class='border-foreground bg-background text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-2xl md:h-16 md:text-[2rem]'
 			>
 				Contact me
 			</button>
 
-			<h3 class='font-vt323 text-secondary text-[2rem]'>
+			<h3
+				class='font-vt323 text-secondary text-center text-xl md:text-start md:text-[2rem]'
+			>
 				Thank you for watching until the end.
 			</h3>
 		</div>
@@ -29,16 +33,18 @@ import footerBackground from '../assets/images/footer-background.webp'
 		/>
 	</div>
 
-	<div class='flex items-center justify-between px-12 py-6'>
-		<span class='font-geist-mono text-secondary text-xl'
-			>© 2026 MARCOAROUND - All rights reserved
+	<div
+		class='flex flex-col items-center justify-between gap-4 px-4 py-3 md:flex-row md:gap-0 md:px-12 md:py-6'
+	>
+		<span class='font-geist-mono text-secondary text-sm md:text-xl'>
+			© 2026 MARCOAROUND - All rights reserved
 		</span>
 
 		<div class='text-secondary flex gap-4'>
-			<Icon class='size-8' name='github' />
-			<Icon class='size-8' name='linkedin' />
-			<Icon class='size-8' name='email' />
-			<Icon class='size-8' name='instagram' />
+			<Icon class='size-6 md:size-8' name='github' />
+			<Icon class='size-6 md:size-8' name='linkedin' />
+			<Icon class='size-6 md:size-8' name='email' />
+			<Icon class='size-6 md:size-8' name='instagram' />
 		</div>
 	</div>
 </footer>

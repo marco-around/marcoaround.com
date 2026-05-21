@@ -5,12 +5,15 @@ interface Props {
 	prefix?: string
 	icon: string
 	suffix: string
+	isSelected?: boolean
 }
 
-const { prefix, icon, suffix } = Astro.props
+const { prefix, icon, suffix, isSelected } = Astro.props
+
+const selectedClass = isSelected ? 'bg-primary/50' : ''
 ---
 
-<div class='text-secondary flex items-center gap-2'>
+<div class=`${selectedClass} text-secondary flex items-center gap-2`>
 	{prefix && <pre class='font-jetbrains-mono text-2xl'>{prefix}</pre>}
 	<Icon name={icon} class='size-6' />
 	<span class='font-geist-mono text-xl'>{suffix}</span>

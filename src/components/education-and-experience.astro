@@ -6,12 +6,12 @@ import TerminalCard from './ui/terminal-card.astro'
 
 <section
 	id='edu-exp-section'
-	class='bg-background flex h-dvh snap-center flex-col gap-6 bg-[url("/pattern.svg")] bg-auto bg-repeat p-4 md:gap-12 md:p-12'
+	class='bg-background flex h-dvh snap-center flex-col gap-6 bg-[url("/pattern.svg")] bg-auto bg-repeat p-4 md:gap-6 md:p-12'
 >
 	<div class='flex items-center gap-4'>
 		<div
 			id='edu-exp-dot'
-			class='bg-primary size-3 shrink-0 rounded-full md:size-3.5'
+			class='bg-primary animate-blink size-3 shrink-0 rounded-full md:size-3.5'
 		>
 		</div>
 		<span
@@ -23,9 +23,9 @@ import TerminalCard from './ui/terminal-card.astro'
 	</div>
 
 	<main
-		class='edu-exp-timeline custom-scrollbar flex h-full flex-row overflow-x-auto overflow-y-hidden py-6'
+		class='edu-exp-timeline flex h-full flex-col overflow-y-auto py-6 md:flex-row md:overflow-x-auto md:overflow-y-hidden'
 	>
-		<Timeline position='top' commitDate='2026-05'>
+		<Timeline position='top' commitDate='2026-05' isFirst>
 			<TerminalCard />
 		</Timeline>
 		<Timeline position='bottom' commitDate='2026-04'>
@@ -41,22 +41,24 @@ import TerminalCard from './ui/terminal-card.astro'
 
 	<footer
 		id='edu-exp-footer'
-		class='bg-muted font-geist-mono text-background flex h-8 w-full shrink-0 items-center justify-between'
+		class='bg-muted font-geist-mono text-background flex h-6 w-full shrink-0 items-center justify-between md:h-8'
 	>
 		<div class='flex h-full'>
-			<div class='bg-border flex items-center gap-3 px-3 text-sm md:text-base'>
+			<div
+				class='bg-border flex items-center gap-2 px-2 text-sm md:gap-3 md:px-3 md:text-base'
+			>
 				[NORMAL]
 				<Icon name='git-branch' />
 				git:main
 			</div>
-			<div class='clip-triangle-right bg-border h-8 w-4'></div>
+			<div class='clip-triangle-right bg-border h-full w-3 md:w-4'></div>
 		</div>
 
 		<div class='flex h-full'>
-			<div class='clip-triangle-left bg-border h-8 w-4'></div>
+			<div class='clip-triangle-left bg-border h-full w-3 md:w-4'></div>
 			<div
 				id='edu-exp-time'
-				class='bg-border flex items-center gap-3 px-3 text-sm md:text-base'
+				class='bg-border flex items-center gap-2 px-2 text-sm md:gap-3 md:px-3 md:text-base'
 			>
 				--:-- | --/--/----
 			</div>
@@ -175,8 +177,8 @@ import TerminalCard from './ui/terminal-card.astro'
 			const dotTl = gsap.timeline({ repeat: -1, delay: 1 })
 			for (const dot of dots) {
 				dotTl
-					.to(dot, { opacity: 0.3, duration: 0.3, ease: 'power1.inOut' })
-					.to(dot, { opacity: 1, duration: 0.3, ease: 'power1.inOut' })
+					.to(dot, { opacity: 0, duration: 0.2, ease: 'power1.inOut' })
+					.to(dot, { opacity: 1, duration: 0.2, ease: 'power1.inOut' })
 			}
 			dotTl.to({}, { duration: 0.8 })
 		}
