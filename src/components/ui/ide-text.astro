@@ -100,12 +100,12 @@ const rows = Array.from({ length: 100 }, (_, i) => textRows[i])
 
 		gsap.set(cursor, { opacity: 0 })
 
-		// Velocidade baseada em caracteres por segundo (~60 chars/s)
-		const CHARS_PER_SECOND = 60
+		// Velocidade baseada em caracteres por segundo
+		const CHARS_PER_SECOND = 300
 
 		function computeDuration(html: string): number {
 			const plainText = html.replace(/<[^>]*>/g, '')
-			return Math.max(plainText.length / CHARS_PER_SECOND, 0.3)
+			return Math.max(plainText.length / CHARS_PER_SECOND, 0.1)
 		}
 
 		const timeline = gsap.timeline({
@@ -146,7 +146,7 @@ const rows = Array.from({ length: 100 }, (_, i) => textRows[i])
 					opacity: 0,
 					ease: 'steps(1)',
 					repeat: -1,
-					duration: 0.8,
+					duration: 0.5,
 					yoyo: true,
 				})
 			})

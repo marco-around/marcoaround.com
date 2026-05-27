@@ -1,0 +1,94 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
+<div id='loading-screen' class='bg-background fixed inset-0 z-50 md:p-6'>
+	<div class='border-border flex size-full flex-col border'>
+		<header class='bg-border h-12 w-full px-3'>
+			<div class='flex h-full w-full items-end gap-3 md:w-[40%]'>
+				<div
+					class='bg-background text-border border-border flex h-9 w-full items-center justify-between border-b px-3'
+				>
+					<div class='flex items-center gap-3'>
+						<Icon name='home' class='size-4' />
+						<span class='font-semibold'>Home</span>
+					</div>
+
+					<Icon name='x' class='size-4' />
+				</div>
+
+				<div
+					class='bg-background text-border border-border flex h-9 w-full items-center justify-between border-b px-3'
+				>
+					<div class='flex items-center gap-3'>
+						<Icon name='pencil' class='size-4' />
+						<span class='font-semibold'>Writing</span>
+					</div>
+
+					<Icon name='x' class='size-4' />
+				</div>
+			</div>
+		</header>
+		<main class='flex grow items-center justify-center'>
+			<span class='font-vt323 text-foreground flex text-[2rem] md:text-6xl'>
+				<span>Loading</span>
+				<span class='loading-dot opacity-0'>.</span>
+				<span class='loading-dot opacity-0'>.</span>
+				<span class='loading-dot opacity-0'>.</span>
+			</span>
+		</main>
+	</div>
+</div>
+
+<script>
+	import gsap from 'gsap'
+
+	function initLoadingScreen() {
+		const container = document.getElementById('loading-screen')
+		if (!container) return
+
+		const dots = container.querySelectorAll('.loading-dot')
+
+		const dotTl = gsap.timeline({ repeat: -1 })
+		dotTl
+			.set(dots, { opacity: 0 })
+			.to(
+				dots,
+				{
+					opacity: 1,
+					duration: 0,
+					stagger: 0.3,
+				},
+				'+=0.3'
+			)
+			.to({}, { duration: 0.5 })
+
+		function startExit() {
+			dotTl.kill()
+
+			const isDesktop = window.matchMedia('(min-width: 768px)').matches
+			const targetPadding = isDesktop ? '3rem' : '1rem'
+
+			gsap
+				.timeline({
+					defaults: { ease: 'power2.inOut' },
+					onComplete: function () {
+						container!.style.display = 'none'
+						document.dispatchEvent(new CustomEvent('loading:complete'))
+					},
+				})
+				.to(container, {
+					padding: targetPadding,
+					duration: 0.6,
+				})
+				.to(container, {
+					autoAlpha: 0,
+					duration: 0.4,
+				})
+		}
+
+		document.addEventListener('model:ready', startExit, { once: true })
+	}
+
+	initLoadingScreen()
+</script>

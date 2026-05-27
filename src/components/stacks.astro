@@ -80,13 +80,13 @@ import ThreeFolder from './ui/three-folder.astro'
 		const tl = gsap.timeline({ repeat: -1 })
 
 		for (const dot of dots) {
-			tl.to(dot, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }).to(dot, {
+			tl.to(dot, { opacity: 0, duration: 0.15, ease: 'power1.inOut' }).to(dot, {
 				opacity: 1,
-				duration: 0.3,
+				duration: 0.15,
 				ease: 'power1.inOut',
 			})
 		}
 
-		tl.to({}, { duration: 0.6 })
+		tl.to({}, { duration: 0.3 })
 	}
 </script>

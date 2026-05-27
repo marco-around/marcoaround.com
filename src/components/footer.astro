@@ -2,24 +2,31 @@
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import footerBackground from '../assets/images/footer-background.webp'
+import walkSpritesheet from '../assets/images/spritesheet-1.webp'
+import waveSpritesheet from '../assets/images/spritesheet-2.webp'
 ---
 
-<footer class='bg-background text-foreground flex h-dvh snap-center flex-col'>
-	<div class='relative size-full p-4 md:p-12'>
+<footer
+	id='footer-section'
+	class='bg-background text-foreground flex h-dvh snap-center flex-col'
+>
+	<div class='relative size-full overflow-hidden p-4 md:p-12'>
 		<div class='relative z-10 flex w-fit flex-col gap-3 md:gap-5'>
 			<div class='flex items-center gap-4'>
 				<h1 class='font-vt323 text-center text-3xl md:text-start md:text-5xl'>
-					Make me better with new challenges
+					<span id='footer-heading'>Make me better with new challenges</span>
 				</h1>
-				<Icon name='heart' class='text-primary size-12' />
+				<Icon id='footer-heart' name='heart' class='text-primary size-12' />
 			</div>
 			<button
-				class='border-foreground bg-background text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-2xl md:h-16 md:text-[2rem]'
+				id='footer-cta'
+				class='border-foreground hover:bg-foreground hover:text-background bg-background text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-2xl duration-150 hover:border-0 md:h-16 md:text-[2rem]'
 			>
 				Contact me
 			</button>
 
 			<h3
+				id='footer-thanks'
 				class='font-vt323 text-secondary text-center text-xl md:text-start md:text-[2rem]'
 			>
 				Thank you for watching until the end.
@@ -27,24 +34,284 @@ import footerBackground from '../assets/images/footer-background.webp'
 		</div>
 
 		<Image
+			id='footer-bg-image'
 			src={footerBackground}
 			alt='city pixel art'
 			class='absolute inset-0 size-full object-cover contrast-110 grayscale'
 		/>
+
+		<div
+			id='footer-character'
+			class=`absolute bottom-[13%] left-0 z-10 size-24 bg-size-[400%_100%] md:bottom-[7%] md:size-48`
+			style={`background-image: url('${walkSpritesheet.src}'); background-position: 0 0;`}
+			data-walk-sprite={walkSpritesheet.src}
+			data-wave-sprite={waveSpritesheet.src}
+			aria-hidden='true'
+		>
+		</div>
 	</div>
 
 	<div
+		id='footer-bar'
 		class='flex flex-col items-center justify-between gap-4 px-4 py-3 md:flex-row md:gap-0 md:px-12 md:py-6'
 	>
-		<span class='font-geist-mono text-secondary text-sm md:text-xl'>
+		<span
+			id='footer-copyright'
+			class='font-geist-mono text-secondary text-sm md:text-xl'
+		>
 			© 2026 MARCOAROUND - All rights reserved
 		</span>
 
 		<div class='text-secondary flex gap-4'>
-			<Icon class='size-6 md:size-8' name='github' />
-			<Icon class='size-6 md:size-8' name='linkedin' />
-			<Icon class='size-6 md:size-8' name='email' />
-			<Icon class='size-6 md:size-8' name='instagram' />
+			<a
+				href='https://github.com/marco-around'
+				class='footer-social hover:text-foreground duration-100 hover:scale-125'
+				target='_blank'
+			>
+				<Icon class='size-6 md:size-8' name='github' />
+			</a>
+			<a
+				href='https://www.linkedin.com/in/marco-t%C3%BAlio-rodrigues/'
+				class='footer-social hover:text-foreground duration-100 hover:scale-125'
+				target='_blank'
+			>
+				<Icon class='size-6 md:size-8' name='linkedin' />
+			</a>
+			<a
+				href='mailto:marcosdevprofessional@gmail.com'
+				class='footer-social hover:text-foreground duration-100 hover:scale-125'
+			>
+				<Icon class='size-6 md:size-8' name='email' />
+			</a>
+			<a
+				href='https://www.instagram.com/marco_trds/'
+				class='footer-social hover:text-foreground duration-100 hover:scale-125'
+				target='_blank'
+			>
+				<Icon class='size-6 md:size-8' name='instagram' />
+			</a>
 		</div>
 	</div>
 </footer>
+
+<script>
+	import gsap from 'gsap'
+	import { ScrollTrigger } from 'gsap/ScrollTrigger'
+	import { TextPlugin } from 'gsap/TextPlugin'
+
+	gsap.registerPlugin(ScrollTrigger, TextPlugin)
+
+	const heading = document.getElementById('footer-heading')
+	const heart = document.getElementById('footer-heart')
+	const cta = document.getElementById('footer-cta')
+	const thanks = document.getElementById('footer-thanks')
+	const bgImage = document.getElementById('footer-bg-image')
+	const bar = document.getElementById('footer-bar')
+	const character = document.getElementById(
+		'footer-character'
+	) as HTMLElement | null
+	const copyright = document.getElementById('footer-copyright')
+	const socials = gsap.utils.toArray<HTMLElement>('.footer-social')
+
+	if (
+		heading &&
+		heart &&
+		cta &&
+		thanks &&
+		bgImage &&
+		bar &&
+		copyright &&
+		socials.length > 0
+	) {
+		const headingText = heading.innerHTML.trim()
+		heading.innerHTML = ''
+
+		gsap.set(heart, { autoAlpha: 0, scale: 0 })
+		gsap.set(cta, { autoAlpha: 0, y: 24 })
+		gsap.set(thanks, { autoAlpha: 0, y: 16 })
+		gsap.set(bgImage, { autoAlpha: 0, scale: 1.08 })
+		gsap.set(bar, { autoAlpha: 0, y: 16 })
+		gsap.set(copyright, { autoAlpha: 0 })
+		gsap.set(socials, { autoAlpha: 0, y: 12, scale: 0.6 })
+
+		const tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: '#footer-section',
+				scroller: '.snap-y',
+				start: 'top 70%',
+				toggleActions: 'play none none none',
+			},
+		})
+
+		// Background image reveal with slow zoom settle
+		tl.to(bgImage, {
+			autoAlpha: 1,
+			scale: 1,
+			duration: 1.4,
+			ease: 'power2.out',
+		})
+
+		// Typewriter heading — starts alongside background reveal
+		tl.to(heading, { text: headingText, duration: 1.2, ease: 'none' }, 0.2)
+
+		// Heart icon bounces in after heading starts
+		tl.to(
+			heart,
+			{
+				autoAlpha: 1,
+				scale: 1,
+				duration: 0.5,
+				ease: 'back.out(3)',
+			},
+			'-=0.3'
+		)
+
+		// Continuous heart pulse (independent, infinite loop)
+		tl.call(() => {
+			gsap.to(heart, {
+				scale: 1.2,
+				duration: 0.6,
+				ease: 'power1.inOut',
+				repeat: -1,
+				yoyo: true,
+			})
+		})
+
+		// CTA button slides up
+		tl.to(
+			cta,
+			{ autoAlpha: 1, y: 0, duration: 0.5, ease: 'power3.out' },
+			'-=0.3'
+		)
+
+		// Thank-you text fades in
+		tl.to(
+			thanks,
+			{ autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+			'-=0.2'
+		)
+
+		// Bottom bar slides up
+		tl.to(
+			bar,
+			{ autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+			'-=0.2'
+		)
+
+		// Copyright fades in
+		tl.to(
+			copyright,
+			{ autoAlpha: 1, duration: 0.4, ease: 'power1.out' },
+			'-=0.3'
+		)
+
+		// Social icons staggered bounce entrance
+		tl.to(
+			socials,
+			{
+				autoAlpha: 1,
+				y: 0,
+				scale: 1,
+				duration: 0.4,
+				stagger: 0.1,
+				ease: 'back.out(2)',
+			},
+			'-=0.3'
+		)
+
+		// Character walk + wave animation
+		if (character) {
+			const waveSprite = character.dataset.waveSprite ?? ''
+
+			// Walking spritesheet: 512x128, 4 frames of 128x128
+			// background-size: 400% 100% so each frame = 100% of element width
+			// background-position steps: 0%, 33.333%, 66.666%, 100%
+			// Waving spritesheet: 1672x941, 2 frames of 836x941
+			// background-size: 200% 100% so each frame = 100% of element width
+
+			gsap.set(character, { autoAlpha: 0, xPercent: -110 })
+
+			const walkFrames = { frame: 0 }
+			const WALK_FRAME_COUNT = 4
+			const WAVE_FRAME_COUNT = 2
+
+			function updateWalkFrame(): void {
+				if (!character) return
+				const pos =
+					(Math.round(walkFrames.frame) / (WALK_FRAME_COUNT - 1)) * 100
+				character.style.backgroundPosition = `${pos}% 0`
+			}
+
+			const waveFrames = { frame: 0 }
+
+			function updateWaveFrame(): void {
+				if (!character) return
+				const pos =
+					(Math.round(waveFrames.frame) / (WAVE_FRAME_COUNT - 1)) * 100
+				character.style.backgroundPosition = `${pos}% 0`
+			}
+
+			const characterTl = gsap.timeline()
+
+			// Make visible instantly (starts off-screen so no flash)
+			characterTl.set(character, { autoAlpha: 1 })
+
+			// Walk cycle (frame animation) + horizontal movement simultaneously
+			const walkDuration = 4
+
+			// Frame cycling: loops through 0→3 repeatedly during walk
+			characterTl.to(
+				walkFrames,
+				{
+					frame: WALK_FRAME_COUNT - 1,
+					duration: 0.5,
+					repeat: Math.floor(walkDuration / 0.5) - 1,
+					ease: `steps(${WALK_FRAME_COUNT - 1})`,
+					onUpdate: updateWalkFrame,
+				},
+				'walk'
+			)
+
+			// Horizontal translation: from off-screen left to 75% of parent
+			characterTl.fromTo(
+				character,
+				{ xPercent: -110, x: 0 },
+				{
+					xPercent: 0,
+					x: function () {
+						const parent = character.parentElement
+						if (!parent) return 0
+						return parent.offsetWidth * 0.75
+					},
+					duration: walkDuration,
+					ease: 'none',
+				},
+				'walk'
+			)
+
+			// Stop walking: reset to frame 0 and swap to wave spritesheet
+			characterTl.call(() => {
+				if (!character) return
+				character.style.backgroundImage = `url('${waveSprite}')`
+				character.style.backgroundSize = '200% 100%'
+				character.style.backgroundPosition = '0 0'
+			})
+
+			// Small pause before waving
+			characterTl.to({}, { duration: 0.3 })
+
+			// Wave animation: toggle between 2 frames, repeat a few times
+			characterTl.to(waveFrames, {
+				frame: WAVE_FRAME_COUNT - 1,
+				duration: 0.4,
+				repeat: 5,
+				yoyo: true,
+				ease: `steps(${WAVE_FRAME_COUNT - 1})`,
+				onUpdate: updateWaveFrame,
+			})
+
+			// Add character animation to main timeline, start after bg reveals
+			tl.add(characterTl, 1.2)
+		}
+	}
+</script>

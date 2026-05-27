@@ -107,7 +107,7 @@ import TerminalCard from './ui/terminal-card.astro'
 		// Typewriter prompt
 		timeline.to(prompt, {
 			text: promptText,
-			duration: 1.2,
+			duration: 0.4,
 			ease: 'none',
 		})
 
@@ -116,11 +116,11 @@ import TerminalCard from './ui/terminal-card.astro'
 			lines,
 			{
 				autoAlpha: 1,
-				duration: 0.6,
-				stagger: 0.08,
+				duration: 0.3,
+				stagger: 0.03,
 				ease: 'power2.out',
 			},
-			'-=0.4'
+			'-=0.1'
 		)
 
 		// Asterisks scale-in with bounce
@@ -129,11 +129,11 @@ import TerminalCard from './ui/terminal-card.astro'
 			{
 				autoAlpha: 1,
 				scale: 1,
-				duration: 0.4,
-				stagger: 0.1,
+				duration: 0.2,
+				stagger: 0.03,
 				ease: 'back.out(2)',
 			},
-			'-=0.3'
+			'-=0.1'
 		)
 
 		// Commit dates fade in
@@ -142,11 +142,11 @@ import TerminalCard from './ui/terminal-card.astro'
 			{
 				autoAlpha: 1,
 				y: 0,
-				duration: 0.4,
-				stagger: 0.1,
+				duration: 0.15,
+				stagger: 0.03,
 				ease: 'power2.out',
 			},
-			'-=0.2'
+			'-=0.1'
 		)
 
 		// Cards staggered entrance
@@ -155,18 +155,18 @@ import TerminalCard from './ui/terminal-card.astro'
 			{
 				autoAlpha: 1,
 				y: 0,
-				duration: 0.6,
-				stagger: 0.15,
+				duration: 0.3,
+				stagger: 0.05,
 				ease: 'power3.out',
 			},
-			'-=0.2'
+			'-=0.1'
 		)
 
 		// Footer slide up
 		timeline.to(
 			footer,
-			{ autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' },
-			'-=0.3'
+			{ autoAlpha: 1, y: 0, duration: 0.2, ease: 'power2.out' },
+			'-=0.1'
 		)
 
 		// Card dots pulse animation (matches explorer-dots pattern from stacks section)
@@ -177,10 +177,10 @@ import TerminalCard from './ui/terminal-card.astro'
 			const dotTl = gsap.timeline({ repeat: -1, delay: 1 })
 			for (const dot of dots) {
 				dotTl
-					.to(dot, { opacity: 0, duration: 0.2, ease: 'power1.inOut' })
-					.to(dot, { opacity: 1, duration: 0.2, ease: 'power1.inOut' })
+					.to(dot, { opacity: 0, duration: 0.1, ease: 'power1.inOut' })
+					.to(dot, { opacity: 1, duration: 0.1, ease: 'power1.inOut' })
 			}
-			dotTl.to({}, { duration: 0.8 })
+			dotTl.to({}, { duration: 0.3 })
 		}
 	}
 

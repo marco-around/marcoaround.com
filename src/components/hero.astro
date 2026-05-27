@@ -103,13 +103,13 @@ import { Model } from './ui/model'
 						id='hero-buttons'
 					>
 						<button
-							class='hero-btn bg-foreground text-background font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center text-xl opacity-0 md:text-2xl'
+							class='hero-btn hover:text-foreground hover:bg-background bg-foreground text-background font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center text-xl opacity-0 duration-150 hover:border hover:border-dashed md:text-2xl'
 						>
 							Download CV
 						</button>
 
 						<button
-							class='hero-btn border-foreground text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-xl opacity-0 md:text-2xl'
+							class='hero-btn hover:bg-foreground hover:text-background border-foreground text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-xl opacity-0 duration-150 hover:border-0 md:text-2xl'
 						>
 							Contact me
 						</button>
@@ -152,14 +152,8 @@ import { Model } from './ui/model'
 		)
 			return
 
-		// Animação infinita do cursor piscando
-		gsap.to(cursor, {
-			opacity: 0,
-			ease: 'steps(1)',
-			repeat: -1,
-			duration: 0.8,
-			yoyo: true,
-		})
+		// Mantém o cursor sólido inicialmente
+		gsap.set(cursor, { opacity: 1 })
 
 		const master = gsap.timeline()
 
@@ -203,7 +197,7 @@ import { Model } from './ui/model'
 		master.to(
 			line1,
 			{
-				duration: 1.2,
+				duration: 0.8,
 				text: 'A traditional developer seeking new challenges',
 				ease: 'none',
 			},
@@ -218,18 +212,31 @@ import { Model } from './ui/model'
 					row2.appendChild(cursor)
 				},
 			},
-			'typing+=1.2'
+			'typing+=0.8'
 		)
 
 		// Text Typing Row 2
 		master.to(
 			line2,
 			{
-				duration: 0.6,
+				duration: 0.3,
 				text: 'around the world...',
 				ease: 'none',
 			},
-			'typing+=1.2'
+			'typing+=0.8'
+		)
+
+		// Inicia o piscar contínuo do cursor após o término da digitação
+		master.to(
+			cursor,
+			{
+				opacity: 0,
+				ease: 'steps(1)',
+				repeat: -1,
+				duration: 0.8,
+				yoyo: true,
+			},
+			'typing+=1.1'
 		)
 
 		master.addLabel('buttons', 'ascii-start')

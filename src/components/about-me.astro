@@ -1,8 +1,6 @@
 ---
-import { Image } from 'astro:assets'
-import aboutMeSprite1 from '../assets/images/about-me-pixel-art-sprite-1.webp'
-import aboutMeSprite2 from '../assets/images/about-me-pixel-art-sprite-2.webp'
 import { Icon } from 'astro-icon/components'
+import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 ---
 
 <section
@@ -14,13 +12,19 @@ import { Icon } from 'astro-icon/components'
 			class='bg-primary animate-blink size-3 rounded-full duration-75 md:size-3.5'
 		>
 		</div>
-		<span class='text-secondary font-geist-mono text-base md:text-xl'>
+		<span
+			id='typewriter-whoami'
+			class='text-secondary font-geist-mono text-base md:text-xl'
+		>
 			marco@portfolio:~$ whoami
 		</span>
 	</div>
 
 	<div class='grid h-full grid-cols-1 gap-6 md:grid-cols-2 md:gap-28'>
-		<div class='border-border relative size-full border-2 border-dashed'>
+		<div
+			id='about-me-image-container'
+			class='border-border relative size-full border-2 border-dashed'
+		>
 			<div
 				class='absolute top-4 right-4 left-4 z-10 flex items-center justify-between gap-4 md:top-6 md:right-6 md:left-6'
 			>
@@ -36,18 +40,18 @@ import { Icon } from 'astro-icon/components'
 				</div>
 			</div>
 
-			<Image
-				src={aboutMeSprite1}
-				alt='Me in pixel art'
-				class='size-full object-cover'
-			/>
-			<Image
-				src={aboutMeSprite2}
-				alt=''
-				aria-hidden='true'
-				id='sprite-wave-frame'
-				class='absolute inset-0 size-full object-cover'
-			/>
+			<div
+				class='absolute inset-0 flex size-full items-center justify-center overflow-hidden'
+			>
+				<div
+					id='sprite-wave-frame'
+					class='aspect-video min-h-full min-w-full shrink-0 bg-size-[200%_100%]'
+					style={`background-image: url('${aboutMeSprite.src}'); background-position: 0% 0%;`}
+					aria-label='Me in pixel art'
+					role='img'
+				>
+				</div>
+			</div>
 		</div>
 
 		<div class='flex flex-col'>
@@ -112,6 +116,8 @@ import { Icon } from 'astro-icon/components'
 
 	gsap.registerPlugin(TextPlugin, ScrollTrigger)
 
+	const whoamiText = document.getElementById('typewriter-whoami')
+	const imageContainer = document.getElementById('about-me-image-container')
 	const helloText = document.getElementById('typewriter-hello')
 	const title = document.getElementById('typewriter-tittle')
 	const paragraph1 = document.getElementById('typewriter-paragraph-1')
@@ -120,6 +126,8 @@ import { Icon } from 'astro-icon/components'
 	const footer = document.getElementById('footer-control')
 
 	if (
+		whoamiText &&
+		imageContainer &&
 		helloText &&
 		title &&
 		title.parentElement &&
@@ -132,10 +140,17 @@ import { Icon } from 'astro-icon/components'
 		footer.parentElement
 	) {
 		// Armazena o conteúdo HTML original (preservando tags <strong>)
+		const whoamiString = whoamiText.innerHTML.trim()
 		const helloString = helloText.innerHTML.trim()
 		const titleText = title.innerHTML.trim()
 		const p1Text = paragraph1.innerHTML.trim()
 		const p2Text = paragraph2.innerHTML.trim()
+
+		// Usa o textContent para contar apenas os caracteres visíveis
+		const whoamiLength = whoamiText.textContent?.length || 23
+		const p1Length = paragraph1.textContent?.length || 200
+		const p2Length = paragraph2.textContent?.length || 270
+		const charSpeed = 0.007 // Velocidade base: 0.007s por caractere
 
 		// Referências imutáveis para preservar o estreitamento de tipo dentro das closures
 		const titleParent = title.parentElement
@@ -144,14 +159,16 @@ import { Icon } from 'astro-icon/components'
 		const footerParent = footer.parentElement
 
 		// Limpa o conteúdo inicial para a animação começar do zero
+		whoamiText.innerHTML = ''
 		helloText.innerHTML = ''
 		title.innerHTML = ''
 		paragraph1.innerHTML = ''
 		paragraph2.innerHTML = ''
 
-		// Estado inicial do footer e cursor para evitar FOUC
+		// Estado inicial do footer, cursor e imagem para evitar FOUC
 		gsap.set(footer, { opacity: 0, y: 40 })
 		gsap.set(cursor, { opacity: 0 })
+		gsap.set(imageContainer, { xPercent: -120, autoAlpha: 0 })
 
 		// Cria a timeline com gatilho de scroll (ScrollTrigger)
 		const timeline = gsap.timeline({
@@ -163,11 +180,28 @@ import { Icon } from 'astro-icon/components'
 			},
 		})
 
+		// 1. Digita o whoami no topo primeiro
+		timeline.to(
+			whoamiText,
+			{ text: whoamiString, duration: whoamiLength * charSpeed, ease: 'none' },
+			0
+		)
+
+		// Label de sincronização para os próximos elementos
+		timeline.addLabel('main-content', '+=0.2')
+
+		// 2. Animação da imagem vindo da esquerda
+		timeline.to(
+			imageContainer,
+			{ xPercent: 0, autoAlpha: 1, duration: 1, ease: 'power3.out' },
+			'main-content'
+		)
+
 		// Animação de digitação paralela para o "Hello!" (sem cursor)
 		timeline.to(
 			helloText,
 			{ text: helloString, duration: 0.6, ease: 'none' },
-			0
+			'main-content'
 		)
 
 		timeline
@@ -176,19 +210,27 @@ import { Icon } from 'astro-icon/components'
 				gsap.set(cursor, { opacity: 1 })
 				titleParent.appendChild(cursor)
 			})
-			.to(title, { text: titleText, duration: 1, ease: 'none' })
+			.to(title, { text: titleText, duration: 0.3, ease: 'none' })
 
 			// 2. Transiciona o cursor para o parágrafo 1 e digita
 			.call(() => {
 				p1Parent.appendChild(cursor)
 			})
-			.to(paragraph1, { text: p1Text, duration: 3, ease: 'none' }, '+=0.1')
+			.to(
+				paragraph1,
+				{ text: p1Text, duration: p1Length * charSpeed, ease: 'none' },
+				'+=0.1'
+			)
 
 			// 3. Transiciona o cursor para o parágrafo 2 e digita
 			.call(() => {
 				p2Parent.appendChild(cursor)
 			})
-			.to(paragraph2, { text: p2Text, duration: 3, ease: 'none' }, '+=0.1')
+			.to(
+				paragraph2,
+				{ text: p2Text, duration: p2Length * charSpeed, ease: 'none' },
+				'+=0.1'
+			)
 
 			// 4. Inicia o piscar contínuo do cursor e retorna-o para a posição original (antes do footer)
 			.call(() => {
@@ -203,24 +245,30 @@ import { Icon } from 'astro-icon/components'
 				})
 			})
 
-		// Animação paralela do footer iniciando no instante 0
+		// Animação paralela do footer iniciando junto com o conteúdo principal
 		timeline.to(
 			footer,
 			{ opacity: 1, y: 0, duration: 2, ease: 'power3.out' },
-			0
+			'main-content'
 		)
 
-		// Animação do pixel art acenando (3 repetições, sincronizada com scroll)
+		// Animação do pixel art acenando (3 repetições, inicia após a imagem chegar na posição)
 		const waveFrame = document.getElementById('sprite-wave-frame')
 		if (waveFrame) {
-			gsap.set(waveFrame, { autoAlpha: 0 })
+			const waveFrames = { frame: 0 }
+
+			function updateWaveFrame(): void {
+				if (!waveFrame) return
+				const pos = Math.round(waveFrames.frame) * 100
+				waveFrame.style.backgroundPosition = `${pos}% 0`
+			}
 
 			const waveTl = gsap.timeline({ repeat: 3 })
 			waveTl
-				.set(waveFrame, { autoAlpha: 1 }, 0.5)
-				.set(waveFrame, { autoAlpha: 0 }, 1.0)
+				.set(waveFrames, { frame: 1, onUpdate: updateWaveFrame }, 0.5)
+				.set(waveFrames, { frame: 0, onUpdate: updateWaveFrame }, 1.0)
 
-			timeline.add(waveTl, 0)
+			timeline.add(waveTl, 'main-content+=1')
 		}
 	}
 

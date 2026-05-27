@@ -124,6 +124,7 @@ export function AsciiEffectRenderer({ isMobile }: AsciiEffectRendererProps) {
 		}
 	}, [size.width, size.height, renderTarget.texture])
 
+	const hasSignaledReady = useRef(false)
 	const isAnimating = useRef(false)
 	const touchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 	const hasPointerMoved = useRef(false)
@@ -211,6 +212,11 @@ export function AsciiEffectRenderer({ isMobile }: AsciiEffectRendererProps) {
 		gl.setRenderTarget(null)
 		gl.clear()
 		gl.render(quadScene, quadCamera)
+
+		if (!hasSignaledReady.current) {
+			hasSignaledReady.current = true
+			document.dispatchEvent(new CustomEvent('model:ready'))
+		}
 	}, 1)
 
 	return null
