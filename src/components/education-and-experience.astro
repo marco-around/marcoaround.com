@@ -6,7 +6,7 @@ import TerminalCard from './ui/terminal-card.astro'
 
 <section
 	id='edu-exp-section'
-	class='bg-background flex h-dvh snap-center flex-col gap-6 bg-[url("/pattern.svg")] bg-auto bg-repeat p-4 md:gap-6 md:p-12'
+	class='bg-background flex h-dvh snap-start flex-col gap-6 bg-[url("/pattern.svg")] bg-auto bg-repeat p-4 md:gap-6 md:p-12'
 >
 	<div class='flex items-center gap-4'>
 		<div
@@ -98,7 +98,6 @@ import TerminalCard from './ui/terminal-card.astro'
 		const timeline = gsap.timeline({
 			scrollTrigger: {
 				trigger: '#edu-exp-section',
-				scroller: '.snap-y',
 				start: 'top 70%',
 				toggleActions: 'play none none none',
 			},

@@ -58,11 +58,7 @@ const rows = Array.from({ length: 100 }, (_, i) => textRows[i])
 			}
 
 			return (
-				<IdeRow
-					number={i + 1}
-					text={row?.text}
-					textId={row?.id || undefined}
-				/>
+				<IdeRow number={i + 1} text={row?.text} textId={row?.id || undefined} />
 			)
 		})
 	}
@@ -111,7 +107,6 @@ const rows = Array.from({ length: 100 }, (_, i) => textRows[i])
 		const timeline = gsap.timeline({
 			scrollTrigger: {
 				trigger: container,
-				scroller: '.snap-y',
 				start: 'top 80%',
 				toggleActions: 'play none none none',
 			},

@@ -8,7 +8,7 @@ import waveSpritesheet from '../assets/images/spritesheet-2.webp'
 
 <footer
 	id='footer-section'
-	class='bg-background text-foreground flex h-dvh snap-center flex-col'
+	class='bg-background text-foreground flex h-dvh snap-start flex-col'
 >
 	<div class='relative size-full overflow-hidden p-4 md:p-12'>
 		<div class='relative z-10 flex w-fit flex-col gap-3 md:gap-5'>
@@ -18,12 +18,13 @@ import waveSpritesheet from '../assets/images/spritesheet-2.webp'
 				</h1>
 				<Icon id='footer-heart' name='heart' class='text-primary size-12' />
 			</div>
-			<button
+			<a
 				id='footer-cta'
+				href='mailto:marcosdevprofessional@gmail.com'
 				class='border-foreground hover:bg-foreground hover:text-background bg-background text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-2xl duration-150 hover:border-0 md:h-16 md:text-[2rem]'
 			>
 				Contact me
-			</button>
+			</a>
 
 			<h3
 				id='footer-thanks'
@@ -65,27 +66,27 @@ import waveSpritesheet from '../assets/images/spritesheet-2.webp'
 		<div class='text-secondary flex gap-4'>
 			<a
 				href='https://github.com/marco-around'
-				class='footer-social hover:text-foreground duration-100 hover:scale-125'
+				class='footer-social hover:text-foreground duration-150'
 				target='_blank'
 			>
 				<Icon class='size-6 md:size-8' name='github' />
 			</a>
 			<a
 				href='https://www.linkedin.com/in/marco-t%C3%BAlio-rodrigues/'
-				class='footer-social hover:text-foreground duration-100 hover:scale-125'
+				class='footer-social hover:text-foreground duration-150'
 				target='_blank'
 			>
 				<Icon class='size-6 md:size-8' name='linkedin' />
 			</a>
 			<a
 				href='mailto:marcosdevprofessional@gmail.com'
-				class='footer-social hover:text-foreground duration-100 hover:scale-125'
+				class='footer-social hover:text-foreground duration-150'
 			>
 				<Icon class='size-6 md:size-8' name='email' />
 			</a>
 			<a
 				href='https://www.instagram.com/marco_trds/'
-				class='footer-social hover:text-foreground duration-100 hover:scale-125'
+				class='footer-social hover:text-foreground duration-150'
 				target='_blank'
 			>
 				<Icon class='size-6 md:size-8' name='instagram' />
@@ -137,7 +138,6 @@ import waveSpritesheet from '../assets/images/spritesheet-2.webp'
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: '#footer-section',
-				scroller: '.snap-y',
 				start: 'top 70%',
 				toggleActions: 'play none none none',
 			},

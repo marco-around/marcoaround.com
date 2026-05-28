@@ -111,10 +111,9 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 
 <script>
 	import gsap from 'gsap'
-	import { ScrollTrigger } from 'gsap/ScrollTrigger'
 	import { TextPlugin } from 'gsap/TextPlugin'
 
-	gsap.registerPlugin(TextPlugin, ScrollTrigger)
+	gsap.registerPlugin(TextPlugin)
 
 	const whoamiText = document.getElementById('typewriter-whoami')
 	const imageContainer = document.getElementById('about-me-image-container')
@@ -174,7 +173,6 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 		const timeline = gsap.timeline({
 			scrollTrigger: {
 				trigger: '#about-me-section',
-				scroller: '.snap-y', // Define o container principal que possui o overflow/scroll
 				start: 'top 70%', // Inicia quando o topo da seção cruza 70% da altura da tela
 				toggleActions: 'play none none none',
 			},
@@ -248,7 +246,7 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 		// Animação paralela do footer iniciando junto com o conteúdo principal
 		timeline.to(
 			footer,
-			{ opacity: 1, y: 0, duration: 2, ease: 'power3.out' },
+			{ opacity: 1, y: 0, duration: 1, ease: 'power3.out' },
 			'main-content'
 		)
 
@@ -263,7 +261,7 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 				waveFrame.style.backgroundPosition = `${pos}% 0`
 			}
 
-			const waveTl = gsap.timeline({ repeat: 3 })
+			const waveTl = gsap.timeline({ repeat: 4 })
 			waveTl
 				.set(waveFrames, { frame: 1, onUpdate: updateWaveFrame }, 0.5)
 				.set(waveFrames, { frame: 0, onUpdate: updateWaveFrame }, 1.0)

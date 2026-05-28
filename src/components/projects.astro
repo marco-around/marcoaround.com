@@ -6,11 +6,59 @@ import vhs from '../assets/images/vhs.webp'
 import moDisc from '../assets/images/mo-disc.webp'
 import diskette from '../assets/images/diskette.webp'
 import cartridge from '../assets/images/cartridge.webp'
+import Dialog from './ui/dialog.astro'
+
+const projectsMoc = [
+	{
+		id: 'modal-vhs',
+		slug: 'vhs',
+		icon: vhs,
+		projectName: 'VHS Project',
+		description: 'Project description here.',
+		stacks: 'React, TypeScript, Node.js',
+		projectLink: '#',
+		desktop: { top: '21%', left: '40%' },
+		mobile: { top: '20%', left: '35%' },
+	},
+	{
+		id: 'modal-diskette',
+		slug: 'diskette',
+		icon: diskette,
+		projectName: 'Diskette Project',
+		description: 'Project description here.',
+		stacks: 'Astro, Tailwind, GSAP',
+		projectLink: '#',
+		desktop: { top: '58%', left: '30%' },
+		mobile: { top: '53%', left: '10%' },
+	},
+	{
+		id: 'modal-cartridge',
+		slug: 'cartridge',
+		icon: cartridge,
+		projectName: 'Cartridge Project',
+		description: 'Project description here.',
+		stacks: 'Next.js, Prisma, PostgreSQL',
+		projectLink: '#',
+		desktop: { top: '35%', left: '59%' },
+		mobile: { top: '43%', left: '60%' },
+	},
+	{
+		id: 'modal-mo-disc',
+		slug: 'mo-disc',
+		icon: moDisc,
+		projectName: 'MO Disc Project',
+		description: 'Project description here.',
+		stacks: 'Vue, Vite, Supabase',
+		projectLink: '#',
+		desktop: { top: '65%', left: '50%' },
+		mobile: { top: '70%', left: '45%' },
+	},
+] as const
 ---
 
 <section
 	id='projects-section'
-	class='bg-background text-foreground flex h-dvh snap-center flex-col justify-between gap-6 p-4 md:gap-12 md:p-12'
+	class='bg-background text-foreground flex h-dvh snap-start flex-col justify-between gap-6 p-4 md:gap-12 md:p-12'
 >
 	<div class='flex items-center gap-4'>
 		<div
@@ -42,49 +90,23 @@ import cartridge from '../assets/images/cartridge.webp'
 		/>
 
 		<div class='absolute inset-0 z-10'>
-			<a
-				href='#'
-				class='project-item group absolute top-[21%] left-[40%] flex w-[8%] flex-col items-center'
-			>
-				<Image
-					src={vhs}
-					alt='vhs pixel art'
-					class='h-auto w-full transition-transform duration-200 hover:-translate-y-2'
-				/>
-			</a>
-
-			<a
-				href='#'
-				class='project-item group absolute top-[58%] left-[30%] flex w-[8%] flex-col items-center'
-			>
-				<Image
-					src={diskette}
-					alt='diskette pixel art'
-					class='h-auto w-full transition-transform duration-200 hover:-translate-y-2'
-				/>
-			</a>
-
-			<a
-				href='#'
-				class='project-item group absolute top-[35%] left-[59%] flex w-[8%] flex-col items-center'
-			>
-				<Image
-					src={cartridge}
-					alt='cartridge pixel art'
-					class='h-auto w-full transition-transform duration-200 hover:-translate-y-2'
-				/>
-			</a>
-
-			<a
-				href='#'
-				class='project-item group absolute top-[65%] left-[50%] flex w-[8%] flex-col items-center'
-			>
-				<Image
-					src={moDisc}
-					alt='mo disc pixel art'
-					class='h-auto w-full transition-transform duration-200 hover:-translate-y-2'
-				/>
-			</a>
+			{
+				projectsMoc.map((project) => (
+					<button
+						type='button'
+						data-modal-target={project.id}
+						class='project-item group absolute flex w-[8%] cursor-pointer flex-col items-center'
+						style={`top: ${project.desktop.top}; left: ${project.desktop.left};`}
+						aria-label={`Open ${project.projectName}`}
+					>
+						<Image
+							src={project.icon}
+							alt={`${project.slug} pixel art`}
+							class='size-full transition-transform duration-200 hover:-translate-y-2'
+						/>
+					</button>
+				))
+			}
 		</div>
 	</div>
 
@@ -108,49 +130,23 @@ import cartridge from '../assets/images/cartridge.webp'
 		/>
 
 		<div class='absolute inset-0 z-10'>
-			<a
-				href='#'
-				class='project-item group absolute top-[20%] left-[35%] flex w-[24%] flex-col items-center'
-			>
-				<Image
-					src={vhs}
-					alt='vhs pixel art'
-					class='h-auto w-full transition-transform duration-200 hover:-translate-y-2'
-				/>
-			</a>
-
-			<a
-				href='#'
-				class='project-item group absolute top-[53%] left-[10%] flex w-[24%] flex-col items-center'
-			>
-				<Image
-					src={diskette}
-					alt='diskette pixel art'
-					class='h-auto w-full transition-transform duration-200 hover:-translate-y-2'
-				/>
-			</a>
-
-			<a
-				href='#'
-				class='project-item group absolute top-[43%] left-[60%] flex w-[24%] flex-col items-center'
-			>
-				<Image
-					src={cartridge}
-					alt='cartridge pixel art'
-					class='h-auto w-full transition-transform duration-200 hover:-translate-y-2'
-				/>
-			</a>
-
-			<a
-				href='#'
-				class='project-item group absolute top-[70%] left-[45%] flex w-[24%] flex-col items-center'
-			>
-				<Image
-					src={moDisc}
-					alt='mo disc pixel art'
-					class='h-auto w-full transition-transform duration-200 hover:-translate-y-2'
-				/>
-			</a>
+			{
+				projectsMoc.map((project) => (
+					<button
+						type='button'
+						data-modal-target={project.id}
+						class={`project-item group absolute flex w-[24%] cursor-pointer flex-col items-center`}
+						style={`top: ${project.mobile.top}; left: ${project.mobile.left};`}
+						aria-label={`Open ${project.projectName}`}
+					>
+						<Image
+							src={project.icon}
+							alt={`${project.slug} pixel art`}
+							class='size-full transition-transform duration-200 hover:-translate-y-2'
+						/>
+					</button>
+				))
+			}
 		</div>
 	</div>
 
@@ -162,10 +158,25 @@ import cartridge from '../assets/images/cartridge.webp'
 	</span>
 </section>
 
+{
+	projectsMoc.map((project) => (
+		<Dialog
+			id={project.id}
+			projectName={project.projectName}
+			description={project.description}
+			stacks={project.stacks}
+			image={project.icon}
+			projectLink={project.projectLink}
+		/>
+	))
+}
+
 <script>
 	import gsap from 'gsap'
 	import { ScrollTrigger } from 'gsap/ScrollTrigger'
 	import { TextPlugin } from 'gsap/TextPlugin'
+
+	import { lenis } from '../utils/lenis'
 
 	gsap.registerPlugin(TextPlugin, ScrollTrigger)
 
@@ -174,6 +185,80 @@ import cartridge from '../assets/images/cartridge.webp'
 	const containers = gsap.utils.toArray('.projects-container')
 	const items = gsap.utils.toArray('.project-item')
 	const footer = document.getElementById('projects-footer')
+
+	// --- Modal open/close logic (event delegation) ---
+
+	function openModal(modal: HTMLDialogElement): void {
+		modal.showModal()
+
+		lenis.stop()
+
+		gsap.fromTo(
+			modal,
+			{ opacity: 0, scale: 0.92, y: 24 },
+			{ opacity: 1, scale: 1, y: 0, duration: 0.35, ease: 'back.out(1.4)' }
+		)
+	}
+
+	function closeModal(modal: HTMLDialogElement): void {
+		gsap.to(modal, {
+			opacity: 0,
+			scale: 0.92,
+			y: 24,
+			duration: 0.2,
+			ease: 'power2.in',
+			onComplete() {
+				modal.close()
+				lenis.start()
+			},
+		})
+	}
+
+	// Delegated click on shelf items → open target modal
+	const triggers = document.querySelectorAll<HTMLElement>('[data-modal-target]')
+	triggers.forEach((trigger) => {
+		trigger.addEventListener('click', function () {
+			const targetId = trigger.dataset.modalTarget
+			if (!targetId) return
+
+			const modal = document.getElementById(
+				targetId
+			) as HTMLDialogElement | null
+			if (!modal) return
+
+			openModal(modal)
+		})
+	})
+
+	// Close buttons inside modals
+	const closeButtons =
+		document.querySelectorAll<HTMLElement>('[data-close-modal]')
+	closeButtons.forEach((btn) => {
+		const modal = btn.closest('dialog') as HTMLDialogElement | null
+		if (!modal) return
+
+		btn.addEventListener('click', function () {
+			closeModal(modal)
+		})
+	})
+
+	// ESC key (cancel event) — animate close instead of instant
+	const modals = document.querySelectorAll<HTMLDialogElement>('[data-modal]')
+	modals.forEach((modal) => {
+		modal.addEventListener('cancel', function (e: Event) {
+			e.preventDefault()
+			closeModal(modal)
+		})
+
+		// Click on backdrop (outside dialog content) to close
+		modal.addEventListener('click', function (e: MouseEvent) {
+			if (e.target === modal) {
+				closeModal(modal)
+			}
+		})
+	})
+
+	// --- Scroll entrance animations ---
 
 	if (section && cmd && containers.length > 0 && footer) {
 		const cmdText = cmd.innerHTML.trim()
@@ -186,7 +271,6 @@ import cartridge from '../assets/images/cartridge.webp'
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: '#projects-section',
-				scroller: '.snap-y',
 				start: 'top 70%',
 				toggleActions: 'play none none none',
 			},
