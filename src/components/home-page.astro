@@ -7,17 +7,21 @@ import EducationAndExperience from '../components/education-and-experience.astro
 import Projects from '../components/projects.astro'
 import Footer from '../components/footer.astro'
 import LoadingScreen from '../components/ui/loading-screen.astro'
+import { getTranslations } from '../utils/i18n'
+
+const locale = Astro.currentLocale ?? 'en'
+const t = getTranslations(locale)
 ---
 
 <Layout
-	title='Home'
-	description='Marco - Software Developer Portfolio. Guiding team architecture, scaling systems, and elevating overall project design.'
+	title={t.home.pageMetadata.title}
+	description={t.home.pageMetadata.description}
 >
 	<div
 		id='snap-container'
 		class='bg-background h-dvh snap-y snap-mandatory overflow-y-auto'
 	>
-		<h1 class='sr-only'>Marco's Portfolio - Software Developer</h1>
+		<h1 class='sr-only'>{t.home.pageMetadata.srOnlyTitle}</h1>
 		<LoadingScreen />
 		<Hero />
 		<AboutMe />

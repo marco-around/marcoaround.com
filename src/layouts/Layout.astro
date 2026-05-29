@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import { getTranslations } from '../utils/i18n'
 
 interface Props {
 	title: string
@@ -8,9 +9,12 @@ interface Props {
 	noindex?: boolean
 }
 
+const locale = Astro.currentLocale ?? 'en'
+const t = getTranslations(locale)
+
 const {
 	title,
-	description = 'Marco - Software Developer Portfolio. Guiding team architecture, scaling systems, and elevating overall project design.',
+	description = t.home.pageMetadata.description,
 	type = 'website',
 	noindex = false,
 } = Astro.props
@@ -31,7 +35,7 @@ const schema = {
 const ogImage = Astro.site + '/og-image.png'
 ---
 
-<html lang='en'>
+<html lang={locale}>
 	<head>
 		<meta charset='UTF-8' />
 		<meta name='viewport' content='width=device-width' />
