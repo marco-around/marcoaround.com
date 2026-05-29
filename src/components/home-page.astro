@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Hero from '../components/hero.astro'
+import AboutMe from '../components/about-me.astro'
+import Stacks from '../components/stacks.astro'
+import EducationAndExperience from '../components/education-and-experience.astro'
+import Projects from '../components/projects.astro'
+import Footer from '../components/footer.astro'
+import LoadingScreen from '../components/ui/loading-screen.astro'
+---
+
+<Layout
+	title='Home'
+	description='Marco - Software Developer Portfolio. Guiding team architecture, scaling systems, and elevating overall project design.'
+>
+	<div
+		id='snap-container'
+		class='bg-background h-dvh snap-y snap-mandatory overflow-y-auto'
+	>
+		<h1 class='sr-only'>Marco's Portfolio - Software Developer</h1>
+		<LoadingScreen />
+		<Hero />
+		<AboutMe />
+		<Stacks />
+		<EducationAndExperience />
+		<Projects />
+		<Footer />
+	</div>
+</Layout>

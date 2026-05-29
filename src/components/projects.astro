@@ -7,15 +7,19 @@ import moDisc from '../assets/images/mo-disc.webp'
 import diskette from '../assets/images/diskette.webp'
 import cartridge from '../assets/images/cartridge.webp'
 import Dialog from './ui/dialog.astro'
+import { getTranslations } from '../utils/i18n'
+
+const locale = Astro.currentLocale ?? 'en'
+const t = getTranslations(locale)
 
 const projectsMoc = [
 	{
 		id: 'modal-vhs',
 		slug: 'vhs',
 		icon: vhs,
-		projectName: 'VHS Project',
-		description: 'Project description here.',
-		stacks: 'React, TypeScript, Node.js',
+		projectName: t.home.projects.list.vhs.projectName,
+		description: t.home.projects.list.vhs.description,
+		stacks: t.home.projects.list.vhs.stacks,
 		projectLink: '#',
 		desktop: { top: '21%', left: '40%' },
 		mobile: { top: '20%', left: '35%' },
@@ -24,9 +28,9 @@ const projectsMoc = [
 		id: 'modal-diskette',
 		slug: 'diskette',
 		icon: diskette,
-		projectName: 'Diskette Project',
-		description: 'Project description here.',
-		stacks: 'Astro, Tailwind, GSAP',
+		projectName: t.home.projects.list.diskette.projectName,
+		description: t.home.projects.list.diskette.description,
+		stacks: t.home.projects.list.diskette.stacks,
 		projectLink: '#',
 		desktop: { top: '58%', left: '30%' },
 		mobile: { top: '53%', left: '10%' },
@@ -35,9 +39,9 @@ const projectsMoc = [
 		id: 'modal-cartridge',
 		slug: 'cartridge',
 		icon: cartridge,
-		projectName: 'Cartridge Project',
-		description: 'Project description here.',
-		stacks: 'Next.js, Prisma, PostgreSQL',
+		projectName: t.home.projects.list.cartridge.projectName,
+		description: t.home.projects.list.cartridge.description,
+		stacks: t.home.projects.list.cartridge.stacks,
 		projectLink: '#',
 		desktop: { top: '35%', left: '59%' },
 		mobile: { top: '43%', left: '60%' },
@@ -46,9 +50,9 @@ const projectsMoc = [
 		id: 'modal-mo-disc',
 		slug: 'mo-disc',
 		icon: moDisc,
-		projectName: 'MO Disc Project',
-		description: 'Project description here.',
-		stacks: 'Vue, Vite, Supabase',
+		projectName: t.home.projects.list.moDisc.projectName,
+		description: t.home.projects.list.moDisc.description,
+		stacks: t.home.projects.list.moDisc.stacks,
 		projectLink: '#',
 		desktop: { top: '65%', left: '50%' },
 		mobile: { top: '70%', left: '45%' },
@@ -58,7 +62,7 @@ const projectsMoc = [
 
 <section
 	id='projects-section'
-	class='bg-background text-foreground flex h-dvh snap-start flex-col justify-between gap-6 p-4 md:gap-12 md:p-12'
+	class='bg-background text-foreground flex h-dvh snap-center snap-always flex-col justify-between gap-6 p-4 md:gap-12 md:p-12'
 >
 	<div class='flex items-center gap-4'>
 		<div
@@ -66,7 +70,7 @@ const projectsMoc = [
 		>
 		</div>
 		<span class='text-secondary font-geist-mono text-base md:text-xl'>
-			marco@portfolio:~$ <span id='projects-cmd'>render -projects</span>
+			{t.home.projects.promptPrefix}<span id='projects-cmd'>{t.home.projects.promptCmd}</span>
 		</span>
 	</div>
 
@@ -79,7 +83,7 @@ const projectsMoc = [
 			<div
 				class='clip-triangle-x bg-background flex size-full items-center justify-center'
 			>
-				<h2 class='font-vt323 text-primary text-4xl'>Projects</h2>
+				<h2 class='font-vt323 text-primary text-4xl'>{t.home.projects.title}</h2>
 			</div>
 		</div>
 
@@ -119,7 +123,7 @@ const projectsMoc = [
 			<div
 				class='clip-triangle-x bg-background flex size-full items-center justify-center'
 			>
-				<h2 class='font-vt323 text-primary text-3xl md:text-5xl'>Projects</h2>
+				<h2 class='font-vt323 text-primary text-3xl md:text-5xl'>{t.home.projects.title}</h2>
 			</div>
 		</div>
 
@@ -154,7 +158,7 @@ const projectsMoc = [
 		id='projects-footer'
 		class='font-geist-mono text-center text-xl md:text-2xl'
 	>
-		Render successful | Files: 4 | Available space: 2
+		{t.home.projects.footer}
 	</span>
 </section>
 
@@ -176,8 +180,6 @@ const projectsMoc = [
 	import { ScrollTrigger } from 'gsap/ScrollTrigger'
 	import { TextPlugin } from 'gsap/TextPlugin'
 
-	import { lenis } from '../utils/lenis'
-
 	gsap.registerPlugin(TextPlugin, ScrollTrigger)
 
 	const section = document.getElementById('projects-section')
@@ -190,8 +192,6 @@ const projectsMoc = [
 
 	function openModal(modal: HTMLDialogElement): void {
 		modal.showModal()
-
-		lenis.stop()
 
 		gsap.fromTo(
 			modal,
@@ -209,7 +209,6 @@ const projectsMoc = [
 			ease: 'power2.in',
 			onComplete() {
 				modal.close()
-				lenis.start()
 			},
 		})
 	}
@@ -272,6 +271,7 @@ const projectsMoc = [
 			scrollTrigger: {
 				trigger: '#projects-section',
 				start: 'top 70%',
+				scroller: '#snap-container',
 				toggleActions: 'play none none none',
 			},
 		})

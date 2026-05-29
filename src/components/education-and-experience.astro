@@ -2,11 +2,15 @@
 import { Icon } from 'astro-icon/components'
 import Timeline from './ui/timeline.astro'
 import TerminalCard from './ui/terminal-card.astro'
+import { getTranslations } from '../utils/i18n'
+
+const locale = Astro.currentLocale ?? 'en'
+const t = getTranslations(locale)
 ---
 
 <section
 	id='edu-exp-section'
-	class='bg-background flex h-dvh snap-start flex-col gap-6 bg-[url("/pattern.svg")] bg-auto bg-repeat p-4 md:gap-6 md:p-12'
+	class='bg-background flex h-dvh snap-center snap-always flex-col gap-6 bg-[url("/pattern.svg")] bg-auto bg-repeat p-4 md:gap-6 md:p-12'
 >
 	<div class='flex items-center gap-4'>
 		<div
@@ -18,7 +22,7 @@ import TerminalCard from './ui/terminal-card.astro'
 			id='edu-exp-prompt'
 			class='text-secondary font-geist-mono text-base md:text-xl'
 		>
-			marco@portfolio:~$ git log -experience -education
+			{t.home.educationAndExperience.prompt}
 		</span>
 	</div>
 
@@ -47,9 +51,9 @@ import TerminalCard from './ui/terminal-card.astro'
 			<div
 				class='bg-border flex items-center gap-2 px-2 text-sm md:gap-3 md:px-3 md:text-base'
 			>
-				[NORMAL]
+				{t.home.educationAndExperience.mode}
 				<Icon name='git-branch' />
-				git:main
+				{t.home.educationAndExperience.branch}
 			</div>
 			<div class='clip-triangle-right bg-border h-full w-3 md:w-4'></div>
 		</div>
@@ -98,6 +102,7 @@ import TerminalCard from './ui/terminal-card.astro'
 		const timeline = gsap.timeline({
 			scrollTrigger: {
 				trigger: '#edu-exp-section',
+				scroller: '#snap-container',
 				start: 'top 70%',
 				toggleActions: 'play none none none',
 			},

@@ -1,11 +1,15 @@
 ---
 import { Icon } from 'astro-icon/components'
 import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
+import { getTranslations } from '../utils/i18n'
+
+const locale = Astro.currentLocale ?? 'en'
+const t = getTranslations(locale)
 ---
 
 <section
 	id='about-me-section'
-	class='bg-background diagonal-bg flex h-dvh snap-center flex-col gap-6 p-4 md:gap-12 md:p-12'
+	class='bg-background diagonal-bg flex h-dvh snap-center snap-always flex-col gap-6 p-4 md:gap-12 md:p-12'
 >
 	<div class='flex items-center gap-4'>
 		<div
@@ -16,7 +20,7 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 			id='typewriter-whoami'
 			class='text-secondary font-geist-mono text-base md:text-xl'
 		>
-			marco@portfolio:~$ whoami
+			{t.home.aboutMe.prompt}
 		</span>
 	</div>
 
@@ -32,7 +36,7 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 					id='typewriter-hello'
 					class='text-secondary font-geist-mono text-base md:text-xl'
 				>
-					Hello!
+					{t.home.aboutMe.hello}
 				</span>
 				<div
 					class='bg-primary animate-blink size-3 rounded-full duration-75 md:size-3.5'
@@ -58,30 +62,19 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 			<h2
 				class='text-foreground font-geist-mono mb-6 text-2xl font-bold md:mb-12 md:text-[2rem]'
 			>
-				<span id='typewriter-tittle'>Hello, I'm Marco!</span>
+				<span id='typewriter-tittle'>{t.home.aboutMe.title}</span>
 			</h2>
 
 			<p
 				class='text-secondary font-geist-mono [&_strong]:text-primary mb-4 text-base leading-[160%] md:mb-6 md:text-xl [&_strong]:font-normal'
 			>
-				<span id='typewriter-paragraph-1'>
-					A <strong>software developer</strong> deeply focused on the intersection
-					of product and business. My core philosophy is that business-oriented
-					<strong> code quality </strong> is the true catalyst for any company's
-					<strong>growth</strong> and <strong>success</strong>.
-				</span>
+				<span id='typewriter-paragraph-1' set:html={t.home.aboutMe.paragraph1} />
 			</p>
 
 			<p
 				class='text-secondary font-geist-mono [&_strong]:text-primary mb-4 text-base leading-[160%] md:mb-6 md:text-xl [&_strong]:font-normal'
 			>
-				<span id='typewriter-paragraph-2'>
-					I specialize in guiding <strong>team architecture</strong>, scaling
-					systems, and elevating overall project <strong>design</strong>. While
-					I am currently developing a logistics system, I am always open to
-					connecting and discussing innovative solutions that require a
-					<strong>strategic</strong>, product-driven perspective.
-				</span>
+				<span id='typewriter-paragraph-2' set:html={t.home.aboutMe.paragraph2} />
 			</p>
 
 			<span
@@ -111,9 +104,10 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 
 <script>
 	import gsap from 'gsap'
+	import { ScrollTrigger } from 'gsap/ScrollTrigger'
 	import { TextPlugin } from 'gsap/TextPlugin'
 
-	gsap.registerPlugin(TextPlugin)
+	gsap.registerPlugin(TextPlugin, ScrollTrigger)
 
 	const whoamiText = document.getElementById('typewriter-whoami')
 	const imageContainer = document.getElementById('about-me-image-container')
@@ -173,6 +167,7 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 		const timeline = gsap.timeline({
 			scrollTrigger: {
 				trigger: '#about-me-section',
+				scroller: '#snap-container',
 				start: 'top 70%', // Inicia quando o topo da seção cruza 70% da altura da tela
 				toggleActions: 'play none none none',
 			},
@@ -207,7 +202,7 @@ import aboutMeSprite from '../assets/images/spritesheet-about-me.webp'
 			.call(() => {
 				gsap.set(cursor, { opacity: 1 })
 				titleParent.appendChild(cursor)
-			})
+			}, [], 'main-content+=0.2')
 			.to(title, { text: titleText, duration: 0.3, ease: 'none' })
 
 			// 2. Transiciona o cursor para o parágrafo 1 e digita

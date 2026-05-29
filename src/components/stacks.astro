@@ -2,9 +2,13 @@
 import { Icon } from 'astro-icon/components'
 import IdeText from './ui/ide-text.astro'
 import ThreeFolder from './ui/three-folder.astro'
+import { getTranslations } from '../utils/i18n'
+
+const locale = Astro.currentLocale ?? 'en'
+const t = getTranslations(locale)
 ---
 
-<section class='flex h-dvh flex-col p-4 md:p-12'>
+<section class='flex h-dvh snap-center snap-always flex-col p-4 md:p-12'>
 	<div class='grid h-full grid-cols-4 overflow-hidden'>
 		<div class='col-span-4 h-full md:col-span-3'>
 			<header class='bg-border h-10 w-full px-3'>
@@ -14,7 +18,7 @@ import ThreeFolder from './ui/three-folder.astro'
 					>
 						<div class='flex items-center gap-3'>
 							<Icon name='markdown' class='size-4' />
-							<span class='font-semibold'>STACKS.md</span>
+							<span class='font-semibold'>{t.home.stacks.tabText}</span>
 						</div>
 
 						<Icon name='x' class='size-4' />
@@ -33,7 +37,7 @@ import ThreeFolder from './ui/three-folder.astro'
 			<header
 				class='border-border flex h-10 items-center justify-between border-b px-3'
 			>
-				<h2 class='font-geist-mono text-secondary text-xl'>Explorer</h2>
+				<h2 class='font-geist-mono text-secondary text-xl'>{t.home.stacks.explorerTitle}</h2>
 
 				<div id='explorer-dots' class='flex items-center gap-1.5'>
 					<div class='bg-primary size-2 rounded-full'></div>
@@ -61,10 +65,10 @@ import ThreeFolder from './ui/three-folder.astro'
 		</div>
 
 		<div class='flex items-center gap-4 font-medium'>
-			<span>LF</span>
-			<span>Markdown</span>
-			<span>Ln 12, Col 1</span>
-			<span>UTF-8</span>
+			<span>{t.home.stacks.footerLF}</span>
+			<span>{t.home.stacks.footerMarkdown}</span>
+			<span>{t.home.stacks.footerLnCol}</span>
+			<span>{t.home.stacks.footerUTF8}</span>
 		</div>
 	</footer>
 </section>

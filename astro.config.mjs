@@ -23,4 +23,8 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss(), svgr()],
 	},
+	i18n: {
+		defaultLocale: 'en',
+		locales: ['pt-br', 'en'],
+	},
 })

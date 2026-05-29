@@ -1,5 +1,4 @@
 ---
-import Lenis from '../components/ui/lenis.astro'
 import '../styles/global.css'
 
 interface Props {
@@ -61,7 +60,6 @@ const ogImage = Astro.site + '/og-image.png'
 		<script type='application/ld+json' set:html={JSON.stringify(schema)} />
 	</head>
 	<body>
-		<Lenis />
 		<slot />
 	</body>
 </html>

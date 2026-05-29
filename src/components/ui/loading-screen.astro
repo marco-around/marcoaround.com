@@ -1,37 +1,16 @@
 ---
-import { Icon } from 'astro-icon/components'
+import { getTranslations } from '../../utils/i18n'
+
+const locale = Astro.currentLocale ?? 'en'
+const t = getTranslations(locale)
 ---
 
 <div id='loading-screen' class='bg-background fixed inset-0 z-50 md:p-6'>
 	<div class='border-border flex size-full flex-col border'>
-		<header class='bg-border h-12 w-full px-3'>
-			<div class='flex h-full w-full items-end gap-3 md:w-[40%]'>
-				<div
-					class='bg-background text-border border-border flex h-9 w-full items-center justify-between border-b px-3'
-				>
-					<div class='flex items-center gap-3'>
-						<Icon name='home' class='size-4' />
-						<span class='font-semibold'>Home</span>
-					</div>
-
-					<Icon name='x' class='size-4' />
-				</div>
-
-				<div
-					class='bg-background text-border border-border flex h-9 w-full items-center justify-between border-b px-3'
-				>
-					<div class='flex items-center gap-3'>
-						<Icon name='pencil' class='size-4' />
-						<span class='font-semibold'>Writing</span>
-					</div>
-
-					<Icon name='x' class='size-4' />
-				</div>
-			</div>
-		</header>
+		<header class='bg-border h-12 w-full px-3'></header>
 		<main class='flex grow items-center justify-center'>
 			<span class='font-vt323 text-foreground flex text-[2rem] md:text-6xl'>
-				<span>Loading</span>
+				<span>{t.home.loadingScreen.fallback}</span>
 				<span class='loading-dot opacity-0'>.</span>
 				<span class='loading-dot opacity-0'>.</span>
 				<span class='loading-dot opacity-0'>.</span>

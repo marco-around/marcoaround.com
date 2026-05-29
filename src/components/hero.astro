@@ -1,36 +1,60 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { Model } from './ui/model'
+import { getTranslations } from '../utils/i18n'
+
+const locale = Astro.currentLocale ?? 'en'
+const t = getTranslations(locale)
+
+const switchLanguageUrl = locale === 'en' ? '/pt-br' : '/'
 ---
 
-<section class='h-dvh snap-start p-4 md:p-12'>
+<section class='h-dvh snap-center snap-always p-4 md:p-12'>
 	<div class='border-border flex size-full flex-col border'>
-		<header class='bg-border h-12 w-full px-3'>
-			<div class='flex h-full w-full items-end gap-3 md:w-[40%]'>
-				<a
-					class='bg-background text-border border-border flex h-9 w-full items-center justify-between px-3'
-					href='/'
+		<header
+			class='bg-border flex h-12 w-full items-center justify-between gap-3 px-3'
+		>
+			<div class='flex size-full gap-3 md:w-[40%]'>
+				<div
+					class='border-background flex size-full items-end overflow-hidden border-b'
 				>
-					<div class='flex items-center gap-3'>
-						<Icon name='home' class='size-4' />
-						<span class='font-semibold'>Home</span>
+					<div
+						id='hero-tab-home'
+						class='bg-background text-border flex h-9 w-full items-center justify-between px-3'
+					>
+						<div class='flex items-center gap-3'>
+							<Icon name='home' class='size-4' />
+							<span class='font-semibold'>{t.home.hero.tabHome}</span>
+						</div>
+
+						<Icon name='x' class='size-4' />
 					</div>
+				</div>
 
-					<Icon name='x' class='size-4' />
-				</a>
-
-				<a
-					class='bg-background text-border border-border flex h-9 w-full items-center justify-between border-b px-3'
-					href='/blog'
+				<div
+					class='border-border flex size-full items-end overflow-hidden border-b'
 				>
-					<div class='flex items-center gap-3'>
-						<Icon name='pencil' class='size-4' />
-						<span class='font-semibold'>Writing</span>
-					</div>
+					<a
+						id='hero-tab-writing'
+						class='bg-background text-border flex h-9 w-full items-center justify-between px-3'
+						href='/blog'
+					>
+						<div class='flex items-center gap-3'>
+							<Icon name='pencil' class='size-4' />
+							<span class='font-semibold'>{t.home.hero.tabWriting}</span>
+						</div>
 
-					<Icon name='x' class='size-4' />
-				</a>
+						<Icon name='x' class='size-4' />
+					</a>
+				</div>
 			</div>
+
+			<a
+				href={switchLanguageUrl}
+				class='text-border bg-background hover:text-foreground flex size-8 shrink-0 cursor-pointer items-center justify-center text-sm font-medium duration-150'
+			>
+				{locale === 'en' ? 'PT' : 'EN'}
+			</a>
 		</header>
 		<main
 			class='grid min-h-0 grow grid-cols-1 p-4 md:grid-cols-2 md:px-6 md:py-0'
@@ -81,11 +105,13 @@ import { Model } from './ui/model'
 						class='text-secondary font-vt323 text-center text-lg leading-[1.32] md:text-start md:text-[2rem]'
 					>
 						<span class='sr-only'>
-							A traditional developer seeking new challenges around the world...
+							{t.home.hero.description}
 						</span>
 						<span aria-hidden='true'>
 							<span class='block' id='typewriter-row-1'>
-								<span id='typewriter-line-1'></span><span
+								<span
+									id='typewriter-line-1'
+									data-text={t.home.hero.descriptionLine1}></span><span
 									id='typewriter-cursor'
 									class='text-secondary font-jetbrains-mono text-base md:text-2xl'
 								>
@@ -93,7 +119,9 @@ import { Model } from './ui/model'
 								</span>
 							</span>
 							<span class='block' id='typewriter-row-2'>
-								<span id='typewriter-line-2'></span>
+								<span
+									id='typewriter-line-2'
+									data-text={t.home.hero.descriptionLine2}></span>
 							</span>
 						</span>
 					</h2>
@@ -108,14 +136,14 @@ import { Model } from './ui/model'
 							rel='noopener noreferrer'
 							class='hero-btn hover:text-foreground hover:bg-background bg-foreground text-background font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center text-xl opacity-0 duration-150 hover:border hover:border-dashed md:text-2xl'
 						>
-							Download CV
+							{t.home.hero.downloadCV}
 						</a>
 
 						<a
 							href='mailto:marcosdevprofessional@gmail.com'
 							class='hero-btn hover:bg-foreground hover:text-background border-foreground text-foreground font-vt323 flex h-12 w-full shrink-0 cursor-pointer items-center justify-center border border-dashed text-xl opacity-0 duration-150 hover:border-0 md:text-2xl'
 						>
-							Contact me
+							{t.home.hero.contactMe}
 						</a>
 					</div>
 				</div>
@@ -132,7 +160,16 @@ import { Model } from './ui/model'
 
 	gsap.registerPlugin(TextPlugin)
 
+	// Runs at parse time (loading screen still covers the page) — seeds GSAP transform cache
+	const tabHome = document.getElementById('hero-tab-home')
+	const tabWriting = document.getElementById('hero-tab-writing')
+	if (tabHome && tabWriting) {
+		gsap.set([tabHome, tabWriting], { yPercent: 110 })
+	}
+
 	function initHeroAnimation() {
+		const tabHome = document.getElementById('hero-tab-home')
+		const tabWriting = document.getElementById('hero-tab-writing')
 		const reveal1 = document.getElementById('ascii-reveal-1')
 		const reveal2 = document.getElementById('ascii-reveal-2')
 		const asciiMarco = document.getElementById('ascii-marco')
@@ -144,6 +181,8 @@ import { Model } from './ui/model'
 		const buttons = document.querySelectorAll('.hero-btn')
 
 		if (
+			!tabHome ||
+			!tabWriting ||
 			!reveal1 ||
 			!reveal2 ||
 			!asciiMarco ||
@@ -161,7 +200,26 @@ import { Model } from './ui/model'
 
 		const master = gsap.timeline()
 
-		master.addLabel('ascii-start', 0.2)
+		master.addLabel('start', 0)
+
+		// Tabs sliding up from below the header bar (initial offset set via inline style)
+
+		master.to(
+			tabHome,
+			{
+				yPercent: 0,
+				duration: 0.7,
+				ease: 'power3.out',
+			},
+			'start'
+		)
+		master.to(
+			tabWriting,
+			{ yPercent: 0, duration: 0.7, ease: 'power3.out' },
+			'start+=0.15'
+		)
+
+		master.addLabel('ascii-start', 'start')
 
 		// ASCII 1 Reveal (da esquerda para a direita e saindo para a direita)
 		master.fromTo(
@@ -202,7 +260,7 @@ import { Model } from './ui/model'
 			line1,
 			{
 				duration: 0.8,
-				text: 'A traditional developer seeking new challenges',
+				text: line1.dataset.text || '',
 				ease: 'none',
 			},
 			'typing'
@@ -224,7 +282,7 @@ import { Model } from './ui/model'
 			line2,
 			{
 				duration: 0.3,
-				text: 'around the world...',
+				text: line2.dataset.text || '',
 				ease: 'none',
 			},
 			'typing+=0.8'

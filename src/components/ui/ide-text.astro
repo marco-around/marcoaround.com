@@ -1,5 +1,9 @@
 ---
 import IdeRow from './ide-row.astro'
+import { getTranslations } from '../../utils/i18n'
+
+const locale = Astro.currentLocale ?? 'en'
+const t = getTranslations(locale)
 
 interface TextRow {
 	text: string
@@ -7,32 +11,32 @@ interface TextRow {
 }
 
 const textRows: TextRow[] = [
-	{ text: '## Oh, you found my <strong>stacks</strong>!', id: 'ide-row-1' },
+	{ text: t.home.stacks.ideText.row1, id: 'ide-row-1' },
 	{ text: '', id: '' },
 	{ text: '', id: '' },
 	{
-		text: "Well, I'm a developer with a deep understanding of the <strong>TypeScript</strong> ecosystem. With <strong>3 years of experience</strong>",
+		text: t.home.stacks.ideText.row4,
 		id: 'ide-row-4',
 	},
 	{
-		text: "using industry-standard tools, I've gained the know-how to build a product from end to end, going from",
+		text: t.home.stacks.ideText.row5,
 		id: 'ide-row-5',
 	},
 	{
-		text: 'designing in <strong>Figma</strong> right through to deploying a container on a <strong>VPS</strong>!',
+		text: t.home.stacks.ideText.row6,
 		id: 'ide-row-6',
 	},
 	{ text: '', id: '' },
 	{
-		text: "Over this time, I've brought various interfaces to life, turning Figma designs into fully functional apps",
+		text: t.home.stacks.ideText.row8,
 		id: 'ide-row-8',
 	},
 	{
-		text: "using React and Vue. As for back-end APIs, I've been responsible for making the <strong>technical choices</strong> to",
+		text: t.home.stacks.ideText.row9,
 		id: 'ide-row-9',
 	},
 	{
-		text: 'support high traffic, using Fastify, PostgreSQL, RabbitMQ, and other top-tier tools.',
+		text: t.home.stacks.ideText.row10,
 		id: 'ide-row-10',
 	},
 	{ text: '', id: '' },
@@ -108,6 +112,7 @@ const rows = Array.from({ length: 100 }, (_, i) => textRows[i])
 			scrollTrigger: {
 				trigger: container,
 				start: 'top 80%',
+				scroller: '#snap-container',
 				toggleActions: 'play none none none',
 			},
 		})
